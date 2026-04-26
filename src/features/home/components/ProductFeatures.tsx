@@ -2,41 +2,45 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Wind, ShieldCheck, Sun, Thermometer } from "lucide-react";
+import { Volume2, Thermometer, Wrench, Cloud } from "lucide-react";
 
 const features = [
   {
-    icon: Wind,
-    title: "Wind Resistant",
-    desc: "Tested to withstand high-velocity winds."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Secure Locking",
-    desc: "Multi-point locking for maximum safety."
-  },
-  {
-    icon: Sun,
-    title: "UV Protection",
-    desc: "Blocks harmful UV rays while letting in light."
+    icon: Volume2,
+    title: "Noise reduction",
+    desc: "Blocks outside noise for a peaceful space",
+    highlight: true
   },
   {
     icon: Thermometer,
-    title: "Thermal Insulation",
-    desc: "Keeps your home warm in winter and cool in summer."
+    title: "Thermal insulation",
+    desc: "Blocks outside noise for a peaceful space",
+    highlight: false
+  },
+  {
+    icon: Wrench,
+    title: "Low maintenance",
+    desc: "Blocks outside noise for a peaceful space",
+    highlight: false
+  },
+  {
+    icon: Cloud,
+    title: "Weather resistance",
+    desc: "Blocks outside noise for a peaceful space",
+    highlight: false
   }
 ];
 
 const ProductFeatures = () => {
   return (
-    <section className="py-24 px-8 bg-[#E6F0F8]">
+    <section className="py-12 md:py-20 px-8 md:px-16 bg-[#E8F1FC] overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="text-center mb-24">
+        <div className="text-center mb-12">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl font-black text-[#0061A8] tracking-tighter uppercase mb-4"
+            className="text-[clamp(2rem,5vw,3rem)] font-bold text-[#0061A8] tracking-tight leading-tight mb-3"
           >
             Product Features
           </motion.h2>
@@ -44,14 +48,14 @@ const ProductFeatures = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-500 font-medium max-w-2xl mx-auto text-sm"
+            transition={{ delay: 0.1 }}
+            className="text-gray-900 font-bold max-w-2xl mx-auto text-[15px] md:text-[17px]"
           >
-            Our products are engineered with the latest technology to provide superior performance and comfort.
+            Designed to deliver comfort, durability, and high performance in every detail.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((item, i) => (
             <motion.div
               key={i}
@@ -59,15 +63,25 @@ const ProductFeatures = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="p-10 rounded-[32px] bg-white group hover:bg-[#0061A8] transition-all duration-700 shadow-sm"
+              className="group p-10 rounded-[24px] relative flex flex-col h-[280px] bg-white text-gray-900 hover:bg-[#0061A8] hover:text-white transition-all duration-500 shadow-sm"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#E6F0F8] flex items-center justify-center text-[#0061A8] mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
-                <item.icon size={28} />
+              <div className="mb-8 text-gray-900 group-hover:text-white transition-colors">
+                <item.icon size={36} strokeWidth={2.5} />
               </div>
-              <h4 className="font-black uppercase tracking-tight text-lg mb-3 text-gray-900 group-hover:text-white transition-all">{item.title}</h4>
-              <p className="text-gray-500 text-xs leading-relaxed group-hover:text-blue-100 transition-all font-medium">
+              
+              <h4 className="font-bold text-[18px] md:text-[20px] mb-2 leading-tight">
+                {item.title}
+              </h4>
+              <p className="text-[13px] md:text-[14px] leading-relaxed font-normal text-gray-400 group-hover:text-blue-100 transition-colors">
                 {item.desc}
               </p>
+
+              {/* Bottom Arrow Icon */}
+              <div className="absolute bottom-8 right-8">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-[#0061A8] text-white group-hover:bg-white group-hover:text-[#0061A8]">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

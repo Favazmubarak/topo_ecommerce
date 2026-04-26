@@ -20,9 +20,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className="absolute top-0 left-0 right-0 z-50 px-8 md:px-16 pt-10 pb-4 bg-transparent"
+      className="absolute top-0 left-0 right-0 z-50 px-8 md:px-16 pt-4 pb-12 bg-gradient-to-b from-black/70 via-black/20 to-transparent pointer-events-none"
     >
-      <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto flex items-center justify-between pointer-events-auto">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <img 
