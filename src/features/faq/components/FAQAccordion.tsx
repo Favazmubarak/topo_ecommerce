@@ -50,7 +50,7 @@ const FAQAccordion = () => {
   }, []);
 
   return (
-    <section id="faq" className="py-24 md:py-32 px-8 md:px-16 bg-white overflow-hidden border-t border-gray-50">
+    <section id="faq" className="pt-24 md:pt-32 pb-12 px-8 md:px-16 bg-white overflow-hidden border-t border-gray-50">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-32">
           {/* Left Side: Heading */}

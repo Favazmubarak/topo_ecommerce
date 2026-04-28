@@ -5,46 +5,46 @@ import { motion } from "framer-motion";
 
 const HomeAbout = () => {
   return (
-    <section id="about" className="py-24 md:py-32 px-8 md:px-16 bg-white overflow-hidden">
+    <section id="about" className="pt-24 pb-12 px-8 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-20">
           {/* Large Heading */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:w-[30%]"
+            className="md:w-1/2"
           >
-            <h2 className="text-[clamp(4rem,10vw,7.5rem)] font-light text-[#A0A0A0] tracking-tight leading-none">
+            <h2 className="text-6xl font-medium text-[#0061A8] tracking-tight">
               About
             </h2>
           </motion.div>
 
           {/* Content Section */}
-          <div className="lg:w-[70%] pt-6">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <p className="text-[16px] md:text-[18px] text-[#777777] leading-[1.8] font-normal max-w-3xl mb-10">
-                Established in 2016, <span className="text-[#0061A8] font-semibold">Topo is a trusted name in premium aluminum window 
-                solutions,</span> known for delivering quality, precision, and modern design. We 
-                believe windows are more than just functional elements they shape the 
-                way spaces look, feel, and perform. <span className="text-[#0061A8] font-semibold">That's why we focus on creating sleek, 
-                durable, and energy-efficient systems</span> that enhance both residential and 
-                commercial environments.
-              </p>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="md:w-1/2"
+          >
+            <p className="text-[#666666] text-lg leading-relaxed mb-10">
+              Established in 2016, <span className="text-[#0061A8] font-semibold">Topo is a trusted name in premium aluminum window 
+              solutions,</span> known for delivering quality, precision, and modern design. We 
+              believe windows are more than just functional elements—they shape the 
+              way spaces look, feel, and perform. <span className="text-[#0061A8] font-semibold">That's why we focus on creating sleek, 
+              durable, and energy-efficient systems</span> that enhance both residential and 
+              commercial environments.
+            </p>
 
+            <div className="flex">
               <button className="bg-[#0061A8] hover:bg-blue-700 transition-colors text-white text-[14px] font-medium px-6 py-2.5 rounded-full flex items-center gap-3">
                 Learn more
                 <div className="bg-white text-[#0061A8] rounded-full p-1.5 flex items-center justify-center">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                 </div>
               </button>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Images Row */}

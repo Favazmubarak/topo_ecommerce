@@ -20,22 +20,24 @@ export default function HomePage() {
       <GalleryGrid />
       
       {/* Final CTA */}
-      <section className="py-24 md:py-32 px-8 relative overflow-hidden">
+      <section className="py-20 px-8 relative overflow-hidden my-40">
         <div className="absolute inset-0 z-0">
-          <img src="/assets/images/image10.jpg" className="w-full h-full object-cover" alt="CTA Background" />
-          <div className="absolute inset-0 bg-black/60" />
+          <img src="/assets/images/img14.jpg" className="w-full h-full object-cover" alt="CTA Background" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 className="text-[clamp(2rem,6vw,4rem)] font-black text-white leading-none tracking-tighter uppercase mb-10">
-            Upgrade Your <br /> Space with Topo
+          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold text-white tracking-tight leading-tight mb-8">
+            Upgrade Your Space with Topo
           </h2>
-          <p className="text-white/70 text-base mb-10 max-w-2xl mx-auto font-medium">
-            Join thousands of satisfied customers who have transformed their homes with our premium window solutions.
+          <p className="text-white/80 text-lg mb-10 max-w-3xl mx-auto font-medium">
+            Transform your home or project with premium aluminum designed for style, strength, and performance.
           </p>
-          <button className="bg-[#0061A8] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-2xl flex items-center gap-4 mx-auto group text-sm">
-            Get Started Now
-            <svg className="transition-transform group-hover:translate-x-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <button className="bg-[#0061A8] hover:bg-blue-700 transition-colors text-white text-[16px] font-semibold px-8 py-3 rounded-full flex items-center gap-4 mx-auto group">
+            Get a Free Quote
+            <div className="bg-white text-[#0061A8] rounded-full p-2 flex items-center justify-center transition-transform group-hover:translate-x-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+            </div>
           </button>
         </div>
       </section>

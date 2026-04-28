@@ -24,27 +24,30 @@ const products = [
 
 const ProductsSection = () => {
   return (
-    <section id="products" className="pt-24 md:pt-32 pb-0 px-8 md:px-16 bg-white overflow-hidden">
+    <section id="products" className="pt-12 pb-24 px-8 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-20 mb-16">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-20">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:w-1/2"
+            className="md:w-1/2"
           >
-            <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-medium text-[#0061A8] tracking-tight leading-tight">
+            <h2 className="text-6xl font-medium text-[#0061A8] tracking-tight">
               Our Products
             </h2>
           </motion.div>
-          <motion.p
+          
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:w-1/2 text-[#999999] font-normal leading-relaxed text-[16px] md:text-[18px] pt-1"
+            className="md:w-1/2"
           >
-            At Topo, we offer high-quality aluminum window solutions designed for durability, style, and performance. Our products combine modern aesthetics with precision engineering to suit both residential and commercial spaces.
-          </motion.p>
+            <p className="text-[#666666] text-lg leading-relaxed pt-1">
+              At Topo, we offer high-quality aluminum window solutions designed for durability, style, and performance. Our products combine modern aesthetics with precision engineering to suit both residential and commercial spaces.
+            </p>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
