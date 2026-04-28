@@ -1,4 +1,5 @@
 import ProductsSection from "@/features/products/components/ProductsSection";
+import Footer from "@/components/layout/Footer";
 
 export default function ProductsPage() {
   return (
@@ -28,6 +29,8 @@ export default function ProductsPage() {
           ))}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

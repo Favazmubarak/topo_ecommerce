@@ -6,6 +6,7 @@ import Testimonials from "@/features/home/components/Testimonials";
 import ProductFeatures from "@/features/home/components/ProductFeatures";
 import FAQAccordion from "@/features/faq/components/FAQAccordion";
 import GalleryGrid from "@/features/gallery/components/GalleryGrid";
+import Footer from "@/components/layout/Footer";
 
 export default function HomePage() {
   return (
@@ -17,7 +18,7 @@ export default function HomePage() {
       <Testimonials />
       <ProductFeatures />
       <FAQAccordion />
-      <GalleryGrid />
+      <GalleryGrid limit={7} isHomePage={true} />
       
       {/* Final CTA */}
       <section className="py-20 px-8 relative overflow-hidden my-40">
@@ -41,6 +42,8 @@ export default function HomePage() {
           </button>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }
