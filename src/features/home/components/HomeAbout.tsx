@@ -1,9 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const HomeAbout = () => {
+  const [images, setImages] = useState({
+    image1Url: "/assets/images/image2.jpg",
+    image2Url: "/assets/images/image6.jpg"
+  });
+
+  useEffect(() => {
+    const fetchAbout = async () => {
+      try {
+        const res = await fetch("/api/about");
+        const data = await res.json();
+        if (data && !data.error) {
+          setImages({
+            image1Url: data.image1Url || "/assets/images/image2.jpg",
+            image2Url: data.image2Url || "/assets/images/image6.jpg"
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch about images:", error);
+      }
+    };
+    fetchAbout();
+  }, []);
   return (
     <section id="about" className="pt-24 pb-12 px-8 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
@@ -69,7 +91,7 @@ const HomeAbout = () => {
             viewport={{ once: true }}
             className="w-full md:w-[450px] aspect-[16/9] md:h-[280px] rounded-[22px] overflow-hidden shadow-2xl shrink-0"
           >
-            <img src="/assets/images/image2.jpg" className="w-full h-full object-cover" alt="Interior Design" />
+            <img src={images.image1Url} className="w-full h-full object-cover" alt="Interior Design" />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -78,7 +100,7 @@ const HomeAbout = () => {
             transition={{ delay: 0.2 }}
             className="w-full md:w-[358px] aspect-[16/9] md:h-[190px] rounded-[22px] overflow-hidden shadow-2xl shrink-0"
           >
-            <img src="/assets/images/image6.jpg" className="w-full h-full object-cover" alt="Modern Architecture" />
+            <img src={images.image2Url} className="w-full h-full object-cover" alt="Modern Architecture" />
           </motion.div>
         </div>
       </div>

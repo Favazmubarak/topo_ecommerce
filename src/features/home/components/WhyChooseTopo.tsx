@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, Pencil, Zap, Cloud } from "lucide-react";
 
@@ -28,6 +28,23 @@ const features = [
 ];
 
 const WhyChooseTopo = () => {
+  const [imageUrl, setImageUrl] = useState("/assets/images/image6.jpg");
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const res = await fetch("/api/why-choose");
+        const data = await res.json();
+        if (data && data.imageUrl) {
+          setImageUrl(data.imageUrl);
+        }
+      } catch (error) {
+        console.error("Failed to fetch why-choose image:", error);
+      }
+    };
+    fetchImage();
+  }, []);
+
   return (
     <section className="pt-16 md:pt-24 pb-12 md:pb-20 px-8 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
@@ -61,7 +78,7 @@ const WhyChooseTopo = () => {
             className="lg:w-1/2 w-full"
           >
             <div className="rounded-[24px] overflow-hidden shadow-xl aspect-video">
-              <img src="/assets/images/image6.jpg" className="w-full h-full object-cover" alt="Why Choose Topo" />
+              <img src={imageUrl} className="w-full h-full object-cover" alt="Why Choose Topo" />
             </div>
           </motion.div>
 

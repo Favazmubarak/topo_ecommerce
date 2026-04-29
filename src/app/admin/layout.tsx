@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Image as ImageIcon, MessageSquare, LogOut, Settings, Package, Star } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, MessageSquare, LogOut, Settings, Package, Star, Info, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -54,6 +54,8 @@ export default function AdminLayout({
 
   const navItems = [
     { name: "Hero & Banner", href: "/admin", icon: LayoutDashboard },
+    { name: "About Section", href: "/admin/about", icon: Info },
+    { name: "Why Choose", href: "/admin/why-choose", icon: ShieldCheck },
     { name: "Products", href: "/admin/products", icon: Package },
     { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
     { name: "Feedbacks", href: "/admin/testimonials", icon: Star },
