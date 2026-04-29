@@ -17,11 +17,24 @@ const navItems = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const pathname = usePathname();
 
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      if (window.location.pathname === "/") {
+        const sections = ["home", "about"];
+        let current = "home";
+        for (const section of sections) {
+          const el = document.getElementById(section);
+          if (el && window.scrollY >= el.offsetTop - 200) {
+            current = section;
+          }
+        }
+        setActiveSection(current);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     handleScroll();
@@ -89,8 +102,9 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
           {navItems.map((item) => {
             const isAnchor = item.href.startsWith("/#");
+            const hashName = isAnchor ? item.href.substring(2) : "";
             const isActive = isAnchor
-              ? pathname === "/"
+              ? pathname === "/" && activeSection === hashName
               : pathname === item.href;
 
             return (
@@ -164,8 +178,9 @@ const Navbar = () => {
             <div className="flex flex-col gap-8">
               {navItems.map((item, index) => {
                 const isAnchor = item.href.startsWith("/#");
+                const hashName = isAnchor ? item.href.substring(2) : "";
                 const isActive = isAnchor
-                  ? pathname === "/"
+                  ? pathname === "/" && activeSection === hashName
                   : pathname === item.href;
 
                 return (
