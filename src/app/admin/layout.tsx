@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Image as ImageIcon, MessageSquare, LogOut, Settings } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, MessageSquare, LogOut, Settings, Package, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function AdminLayout({
@@ -21,7 +21,9 @@ export default function AdminLayout({
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "Products", href: "/admin/products", icon: Package },
     { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
+    { name: "Feedbacks", href: "/admin/testimonials", icon: Star },
     { name: "FAQ", href: "/admin/faq", icon: MessageSquare },
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ];

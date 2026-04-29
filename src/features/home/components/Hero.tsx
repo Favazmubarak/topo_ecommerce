@@ -1,16 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
 const Hero = () => {
+  const [heroData, setHeroData] = useState({
+    title: "Framing the Future of Modern Living",
+    imageUrl: "/assets/images/image1.jpg"
+  });
+
+  useEffect(() => {
+    const fetchHero = async () => {
+      try {
+        const res = await fetch("/api/hero");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.title) {
+            setHeroData({
+              title: data.title,
+              imageUrl: data.imageUrl || "/assets/images/image1.jpg"
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching hero:", error);
+      }
+    };
+    fetchHero();
+  }, []);
+
+  // Split title for the two-line effect
+  const titleWords = heroData.title.split(" ");
+  const firstLine = titleWords.slice(0, Math.ceil(titleWords.length / 2)).join(" ");
+  const secondLine = titleWords.slice(Math.ceil(titleWords.length / 2)).join(" ");
+
   return (
-    <section className="relative h-screen w-full flex items-center overflow-hidden bg-white">
+    <section id="home" className="relative h-screen w-full flex items-center overflow-hidden bg-white">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="/assets/images/image1.jpg"
+          src={heroData.imageUrl}
           alt="Topo Hero"
           fill
           className="object-cover object-[35%_center] scale-110"
@@ -21,6 +51,7 @@ const Hero = () => {
 
       <div className="absolute z-20 left-[95px] top-[19%]">
         <motion.div
+          key={heroData.title} // Re-animate if title changes
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -31,9 +62,9 @@ const Hero = () => {
             style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
           >
             <span className="block whitespace-nowrap">
-              Framing the Future of
+              {firstLine}
             </span>
-            <span className="block">Modern Living</span>
+            <span className="block">{secondLine}</span>
           </h1>
         </motion.div>
       </div>

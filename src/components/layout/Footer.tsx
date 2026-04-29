@@ -39,8 +39,8 @@ const Footer = () => {
             <div className="flex flex-col gap-6 min-w-[120px]">
               <h4 className="font-bold text-[18px]">Company</h4>
               <ul className="flex flex-col gap-3 text-white/90 text-[16px]">
-                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/#home" className="hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/#about" className="hover:text-white transition-colors">About</Link></li>
                 <li><Link href="/products" className="hover:text-white transition-colors">Products</Link></li>
                 <li><Link href="/gallery" className="hover:text-white transition-colors">Gallery</Link></li>
               </ul>
@@ -53,7 +53,7 @@ const Footer = () => {
                 <li><Link href="#" className="hover:text-white transition-colors">Help</Link></li>
                 <li><Link href="#" className="hover:text-white transition-colors">privacy policy</Link></li>
                 <li><Link href="#" className="hover:text-white transition-colors">Warranty Information</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link href="/#faq" className="hover:text-white transition-colors">FAQ</Link></li>
                 <li><Link href="#" className="hover:text-white transition-colors">Contact Support</Link></li>
               </ul>
             </div>

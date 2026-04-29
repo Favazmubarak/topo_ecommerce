@@ -7,8 +7,8 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
+  { name: "Home", href: "/#home" },
+  { name: "About", href: "/#about" },
   { name: "Products", href: "/products" },
   { name: "Gallery", href: "/gallery" },
 ];
@@ -18,7 +18,7 @@ const Navbar = () => {
   const pathname = usePathname();
   
   // Check if we are on a light-themed page
-  const isLightPage = pathname === "/gallery" || pathname === "/about" || pathname === "/products";
+  const isLightPage = pathname === "/gallery" || pathname === "/products";
 
   // Determine Logo Color based on page
   const logoColor = isLightPage ? "#0061A8" : "#FFFFFF";
@@ -30,7 +30,7 @@ const Navbar = () => {
     )}>
       <div className="max-w-[1400px] mx-auto h-full flex items-center justify-between pointer-events-auto">
         {/* Logo - Standardized Container */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/#home" className="flex items-center gap-2 group">
           <div className="relative h-12 md:h-[72px] w-32 md:w-48">
             <div 
               className="w-full h-full"
@@ -51,29 +51,28 @@ const Navbar = () => {
 
         {/* Navigation */}
         <div className="hidden md:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-[15.5px] tracking-tight",
-                isLightPage 
-                  ? (pathname === item.href ? "text-[#0061A8] font-bold" : "text-[#1A1A1A] font-bold hover:text-[#0061A8]")
-                  : (pathname === item.href ? "text-white font-bold" : "text-white font-bold hover:text-white/80")
-              )}
-              style={!isLightPage ? { textShadow: '0 1px 4px rgba(0,0,0,0.3)' } : {}}
-            >
-              <span className="relative pb-1">
-                {item.name}
-                {pathname === item.href && (
-                  <div className={cn(
-                    "absolute bottom-0 left-0 right-0 h-[2.5px]",
-                    isLightPage ? "bg-[#0061A8]" : "bg-white"
-                  )} />
+          {navItems.map((item) => {
+            const isAnchor = item.href.startsWith("/#");
+            const isActive = isAnchor ? pathname === "/" : pathname === item.href;
+            
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "text-[15.5px] tracking-tight",
+                  isLightPage 
+                    ? (isActive ? "text-[#0061A8] font-bold" : "text-[#1A1A1A] font-bold hover:text-[#0061A8]")
+                    : (isActive ? "text-white font-bold" : "text-white font-bold hover:text-white/80")
                 )}
-              </span>
-            </Link>
-          ))}
+                style={!isLightPage ? { textShadow: '0 1px 4px rgba(0,0,0,0.3)' } : {}}
+              >
+                <span className="relative pb-1">
+                  {item.name}
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Right side spacer */}
@@ -98,19 +97,24 @@ const Navbar = () => {
             <X size={44} className="text-black" />
           </button>
           <div className="flex flex-col items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-5xl font-black uppercase tracking-tighter",
-                  pathname === item.href ? "text-[#0061A8]" : "text-black/20 hover:text-black transition-colors"
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isAnchor = item.href.startsWith("/#");
+              const isActive = isAnchor ? pathname === "/" : pathname === item.href;
+              
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "text-5xl font-black uppercase tracking-tighter",
+                    isActive ? "text-[#0061A8]" : "text-black/20 hover:text-black transition-colors"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

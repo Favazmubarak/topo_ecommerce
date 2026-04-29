@@ -5,26 +5,26 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface GalleryImage {
-  url: string;
+  imageUrl: string;
   title?: string;
 }
 
-const images: GalleryImage[] = [
-  { url: "/assets/images/image6.jpg", title: "Modern Panorama" },
-  { url: "/assets/images/image7.png", title: "Mountain Retreat" },
-  { url: "/assets/images/image10.jpg", title: "Red Chair Lounge" },
-  { url: "/assets/images/image8.jpg", title: "Minimalist Loft" },
-  { url: "/assets/images/img11.jpg", title: "Forest Sanctuary" },
-  { url: "/assets/images/image9.jpg", title: "Glass Sunroom" },
-  { url: "/assets/images/img12.png", title: "Twilight Views" },
-  { url: "/assets/images/image1.jpg", title: "Classic Framing" },
-  { url: "/assets/images/img16.jpg", title: "Modern Living" },
-  { url: "/assets/images/img17.jpg", title: "Contemporary Villa" },
-  { url: "/assets/images/img18.jpg", title: "Luxury Poolside" },
-  { url: "/assets/images/img19.jpg", title: "Brutalist Design" },
-  { url: "/assets/images/img20.jpg", title: "Waterfront View" },
-  { url: "/assets/images/img21.jpg", title: "Wicker Terrace" },
-  { url: "/assets/images/img22.jpg", title: "Gallery Hall" },
+const staticImages: GalleryImage[] = [
+  { imageUrl: "/assets/images/image6.jpg", title: "Modern Panorama" },
+  { imageUrl: "/assets/images/image7.png", title: "Mountain Retreat" },
+  { imageUrl: "/assets/images/image10.jpg", title: "Red Chair Lounge" },
+  { imageUrl: "/assets/images/image8.jpg", title: "Minimalist Loft" },
+  { imageUrl: "/assets/images/img11.jpg", title: "Forest Sanctuary" },
+  { imageUrl: "/assets/images/image9.jpg", title: "Glass Sunroom" },
+  { imageUrl: "/assets/images/img12.png", title: "Twilight Views" },
+  { imageUrl: "/assets/images/image1.jpg", title: "Classic Framing" },
+  { imageUrl: "/assets/images/img16.jpg", title: "Modern Living" },
+  { imageUrl: "/assets/images/img17.jpg", title: "Contemporary Villa" },
+  { imageUrl: "/assets/images/img18.jpg", title: "Luxury Poolside" },
+  { imageUrl: "/assets/images/img19.jpg", title: "Brutalist Design" },
+  { imageUrl: "/assets/images/img20.jpg", title: "Waterfront View" },
+  { imageUrl: "/assets/images/img21.jpg", title: "Wicker Terrace" },
+  { imageUrl: "/assets/images/img22.jpg", title: "Gallery Hall" },
 ];
 
 const ParallaxImage = ({ url, title, isHomePage }: { url: string; title?: string; isHomePage: boolean }) => {
@@ -56,19 +56,39 @@ interface GalleryGridProps {
 
 const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGridProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const displayImages = limit ? images.slice(0, limit) : images;
+  const [dbImages, setDbImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const res = await fetch("/api/gallery");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setDbImages(data);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching gallery:", error);
+      }
+    };
+    fetchImages();
+  }, []);
+
+  const currentImages = dbImages.length > 0 ? dbImages : staticImages;
+  const displayImages = limit ? currentImages.slice(0, limit) : currentImages;
 
   const goToNext = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % images.length);
+      setSelectedIndex((selectedIndex + 1) % currentImages.length);
     }
   };
 
   const goToPrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
+      setSelectedIndex((selectedIndex - 1 + currentImages.length) % currentImages.length);
     }
   };
 
@@ -81,7 +101,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex]);
+  }, [selectedIndex, currentImages.length]);
 
   const getColSpan = (index: number) => {
     if (index === 0 || index === 10) return "md:col-span-4";
@@ -142,7 +162,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
               onClick={() => !isHomePage && setSelectedIndex(index)}
               className={`${getColSpan(index)} relative rounded-[32px] overflow-hidden bg-gray-50 group cursor-pointer aspect-square md:aspect-auto md:h-[550px] shadow-sm`}
             >
-              <ParallaxImage url={image.url} title={image.title} isHomePage={isHomePage} />
+              <ParallaxImage url={image.imageUrl} title={image.title} isHomePage={isHomePage} />
 
               {/* Home Page Specific Hover Overlay */}
               {isHomePage && (
@@ -202,17 +222,17 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
                   onClick={(e) => e.stopPropagation()}
                 >
                   <img
-                    src={images[selectedIndex].url}
-                    alt={images[selectedIndex].title || "Gallery image"}
+                    src={currentImages[selectedIndex].imageUrl}
+                    alt={currentImages[selectedIndex].title || "Gallery image"}
                     className="max-w-full max-h-[80vh] object-contain shadow-[0_0_80px_rgba(0,0,0,0.5)] rounded-lg"
                   />
                   
                   <div className="mt-12 text-center">
                     <span className="text-white/40 text-sm font-bold uppercase tracking-[0.3em] mb-3 block">
-                      {selectedIndex + 1} / {images.length}
+                      {selectedIndex + 1} / {currentImages.length}
                     </span>
                     <h3 className="text-white text-3xl font-bold tracking-tight">
-                      {images[selectedIndex].title}
+                      {currentImages[selectedIndex].title}
                     </h3>
                   </div>
                 </motion.div>

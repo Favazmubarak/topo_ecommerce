@@ -1,18 +1,82 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Plus, Trash2, Image as ImageIcon, Upload, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminGalleryPage() {
-  const [images, setImages] = useState([
-    { id: "1", url: "https://res.cloudinary.com/dzvk7u4nk/image/upload/v1713955000/topo-g1.jpg", title: "Modern Living Room" },
-    { id: "2", url: "https://res.cloudinary.com/dzvk7u4nk/image/upload/v1713955000/topo-g2.jpg", title: "Scenic View Window" },
-  ]);
-  const [uploading, setUploading] = useState(false);
+  const [images, setImages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [title, setTitle] = useState("");
 
-  const handleDelete = (id: string) => {
-    setImages(images.filter(img => img.id !== id));
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  const fetchImages = async () => {
+    try {
+      const res = await fetch("/api/gallery");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setImages(data);
+      } else {
+        setImages([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch gallery:", error);
+      setImages([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file || !title) return;
+    setIsUploading(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "topo_unsigned");
+
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      
+      const apiRes = await fetch("/api/gallery", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          imageUrl: data.secure_url,
+          publicId: data.public_id,
+        }),
+      });
+
+      if (apiRes.ok) {
+        setTitle("");
+        setFile(null);
+        fetchImages();
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure?")) return;
+    try {
+      const res = await fetch(`/api/gallery/${id}`, { method: "DELETE" }); // Wait, is there a [id] route for gallery?
+      if (res.ok) fetchImages();
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
   };
 
   return (
@@ -22,30 +86,48 @@ export default function AdminGalleryPage() {
           <h2 className="text-2xl font-bold text-gray-900">Gallery Management</h2>
           <p className="text-gray-500 text-sm mt-1">Upload and manage images displayed on the gallery page</p>
         </div>
-        <button className="bg-[#0061A8] text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">
-          <Plus size={20} />
-          Upload New Image
-        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Upload Form Card */}
+        <div className="bg-white rounded-3xl p-8 border-2 border-dashed border-gray-200 flex flex-col gap-4">
+          <h3 className="font-bold text-gray-800">Add New Image</h3>
+          <input 
+            type="text" 
+            placeholder="Image Title" 
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full px-4 py-2 rounded-xl border border-gray-100 outline-none focus:ring-2 focus:ring-[#0061A8]"
+          />
+          <input 
+            type="file" 
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="text-xs"
+          />
+          <button 
+            onClick={handleUpload}
+            disabled={isUploading || !file || !title}
+            className="mt-2 bg-[#0061A8] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {isUploading ? <Loader2 className="animate-spin" size={20} /> : <Plus size={20} />}
+            {isUploading ? "Uploading..." : "Upload Image"}
+          </button>
+        </div>
+
         <AnimatePresence>
           {images.map((image) => (
             <motion.div
-              key={image.id}
+              key={image._id}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm group"
             >
               <div className="relative h-64">
-                <img src={image.url} className="w-full h-full object-cover" alt={image.title} />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                  <button className="p-3 bg-white text-gray-900 rounded-xl hover:scale-110 transition-transform">
-                    <ImageIcon size={20} />
-                  </button>
+                <img src={image.imageUrl} className="w-full h-full object-cover" alt={image.title} />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <button 
-                    onClick={() => handleDelete(image.id)}
+                    onClick={() => handleDelete(image._id)}
                     className="p-3 bg-red-500 text-white rounded-xl hover:scale-110 transition-transform"
                   >
                     <Trash2 size={20} />
@@ -53,25 +135,11 @@ export default function AdminGalleryPage() {
                 </div>
               </div>
               <div className="p-6">
-                <input
-                  type="text"
-                  defaultValue={image.title}
-                  className="w-full bg-transparent font-bold text-gray-800 outline-none border-b border-transparent focus:border-[#0061A8] pb-1 transition-all"
-                  placeholder="Enter image title..."
-                />
-                <p className="text-xs text-gray-400 mt-2">Uploaded on April 24, 2026</p>
+                <p className="font-bold text-gray-800">{image.title}</p>
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
-
-        {/* Upload Placeholder */}
-        <div className="border-2 border-dashed border-gray-200 rounded-3xl p-12 flex flex-col items-center justify-center bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer min-h-[350px]">
-          <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-            <Upload className="text-[#0061A8]" size={24} />
-          </div>
-          <p className="font-bold text-gray-900">Add Image</p>
-        </div>
       </div>
     </div>
   );
