@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 const Hero = () => {
   const [heroData, setHeroData] = useState({
     title: "Framing the Future of Modern Living",
+    titleColor: "#FFFFFF",
     imageUrl: "/assets/images/image1.jpg"
   });
 
@@ -17,12 +18,13 @@ const Hero = () => {
   useEffect(() => {
     const fetchHero = async () => {
       try {
-        const res = await fetch("/api/hero");
+        const res = await fetch("/api/hero", { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
-          if (data && data.title) {
+          if (data) {
             setHeroData({
-              title: data.title,
+              title: data.title || "",
+              titleColor: data.titleColor || "#FFFFFF",
               imageUrl: data.imageUrl || "/assets/images/image1.jpg"
             });
           }
@@ -31,7 +33,13 @@ const Hero = () => {
         console.error("Error fetching hero:", error);
       }
     };
+
     fetchHero();
+    
+    // Live Sync: Check for updates every 10 seconds
+    const interval = setInterval(fetchHero, 10000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   // Split title for the two-line effect
@@ -56,25 +64,31 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[82%] via-white/80 via-[93%] to-white z-10" />
       </motion.div>
 
-      <div className="absolute z-20 left-[95px] top-[19%]">
-        <motion.div
-          key={heroData.title}
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{ willChange: "opacity, transform" }}
-        >
-          <h1
-            className="hero-title-refined"
-            style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
+      {heroData.title && (
+        <div className="absolute z-20 left-8 right-8 top-1/4 md:left-[95px] md:right-auto md:top-[19%]">
+          <motion.div
+            key={heroData.title}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ willChange: "opacity, transform" }}
           >
-            <span className="block whitespace-nowrap">
-              {firstLine}
-            </span>
-            <span className="block">{secondLine}</span>
-          </h1>
-        </motion.div>
-      </div>
+            <h1
+              className="hero-title-refined"
+              style={{ 
+                color: heroData.titleColor, 
+                WebkitTextFillColor: heroData.titleColor,
+                transition: "color 0.5s ease-in-out" 
+              }}
+            >
+              <span className="block md:whitespace-nowrap">
+                {firstLine}
+              </span>
+              <span className="block">{secondLine}</span>
+            </h1>
+          </motion.div>
+        </div>
+      )}
 
       {/* Interactive Hotspots */}
       <div className="absolute inset-0 z-30 pointer-events-none hidden lg:block">

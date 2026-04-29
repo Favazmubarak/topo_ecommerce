@@ -35,7 +35,7 @@ const FAQAccordion = () => {
   React.useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch("/api/faq");
+        const response = await fetch("/api/faq", { cache: "no-store" });
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
           setFaqs(data);
@@ -46,7 +46,10 @@ const FAQAccordion = () => {
         setLoading(false);
       }
     };
+    
     fetchFaqs();
+    const interval = setInterval(fetchFaqs, 15000);
+    return () => clearInterval(interval);
   }, []);
 
   return (

@@ -30,15 +30,16 @@ export default function HomePage() {
       {isLoading ? (
         <PageLoader key="loader" />
       ) : (
-        <motion.div 
-          key="content"
-          initial={{ opacity: 0, filter: "blur(12px)", scale: 1.01 }}
-          animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-          transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
-          style={{ willChange: "filter, opacity" }}
-          className="bg-white"
-        >
+        <>
           <Navbar />
+          <motion.div 
+            key="content"
+            initial={{ opacity: 0, filter: "blur(12px)", scale: 1.01 }}
+            animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+            transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: "filter, opacity" }}
+            className="bg-white"
+          >
           <Hero />
           <HomeAbout />
           <ProductsSection />
@@ -48,31 +49,53 @@ export default function HomePage() {
           <FAQAccordion />
           <GalleryGrid limit={7} isHomePage={true} />
           
-          {/* Final CTA */}
-          <section className="py-20 px-8 relative overflow-hidden my-40">
+          {/* Final CTA - Restored Parallax Background */}
+          <section className="py-12 md:py-15 px-8 relative overflow-hidden mt-10 mb-20 md:mt-18 md:mb-38">
+            {/* Restored Background Image Logic */}
             <div className="absolute inset-0 z-0">
-              <img src="/assets/images/img14.jpg" className="w-full h-full object-cover" alt="CTA Background" />
-              <div className="absolute inset-0 bg-black/40" />
+              <div 
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: "url('/assets/images/img14.jpg')",
+                  backgroundAttachment: "fixed",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+              <div className="absolute inset-0 bg-black/30" />
             </div>
             
-            <div className="relative z-10 max-w-4xl mx-auto text-center">
-              <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold text-white tracking-tight leading-tight mb-8">
-                Upgrade Your Space with Topo
-              </h2>
-              <p className="text-white/80 text-lg mb-10 max-w-3xl mx-auto font-medium">
-                Transform your home or project with premium aluminum designed for style, strength, and performance.
-              </p>
-              <button className="bg-[#0061A8] hover:bg-blue-700 transition-colors text-white text-[16px] font-semibold px-8 py-3 rounded-full flex items-center gap-4 mx-auto group">
-                Get a Free Quote
-                <div className="bg-white text-[#0061A8] rounded-full p-2 flex items-center justify-center transition-transform group-hover:translate-x-1">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                </div>
-              </button>
+            <div className="relative z-10 max-w-5xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <h2 className="text-[32px] md:text-[64px] font-medium text-white tracking-tight leading-tight mb-6 whitespace-nowrap">
+                  Upgrade Your Space with Topo
+                </h2>
+                
+                <p className="text-white/90 text-lg md:text-[22px] font-medium leading-relaxed mb-10 max-w-[700px] mx-auto">
+                  Transform your home or project with premium aluminum <br className="hidden md:block" />
+                  designed for style, strength, and performance.
+                </p>
+
+                <button className="bg-[#0061A8] hover:bg-blue-700 transition-all duration-300 text-white text-[15px] font-bold py-[14px] pl-8 pr-3 rounded-full flex items-center gap-5 mx-auto group shadow-lg">
+                  Get a Free Quote
+                  <div className="bg-white text-[#0061A8] rounded-full w-10 h-10 flex items-center justify-center transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 17l10-10M17 17V7H7"/>
+                    </svg>
+                  </div>
+                </button>
+              </motion.div>
             </div>
           </section>
 
           <Footer />
-        </motion.div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

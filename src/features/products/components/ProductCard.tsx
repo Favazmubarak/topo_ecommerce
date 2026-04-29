@@ -71,13 +71,13 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
         className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
       />
 
-      {/* Content Overlay with Lift Effect */}
-      <div className="absolute inset-x-0 bottom-0 p-4 transform transition-transform duration-700 group-hover:-translate-y-2">
-        <div className="bg-white/95 backdrop-blur-md rounded-[16px] p-6 shadow-xl border border-white/20">
-          <h3 className="text-[18px] md:text-[20px] font-semibold text-gray-900 mb-2 leading-tight">
+      {/* Content Overlay - Clean integrated look matching reference */}
+      <div className="absolute inset-x-0 bottom-0 p-3 transform transition-transform duration-700 group-hover:-translate-y-1">
+        <div className="bg-white/85 rounded-[20px] p-6 shadow-sm border border-white/10">
+          <h3 className="text-[17px] md:text-[19px] font-bold text-gray-900 mb-1.5 tracking-tight leading-tight">
             {title}
           </h3>
-          <p className="text-[#666666] text-[13px] md:text-[14px] leading-relaxed font-normal">
+          <p className="text-[#444444] text-[12px] md:text-[13px] leading-relaxed font-medium">
             {description}
           </p>
         </div>

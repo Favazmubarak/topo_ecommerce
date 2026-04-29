@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { name: "Home", href: "/#home" },
@@ -13,124 +14,195 @@ const navItems = [
   { name: "Gallery", href: "/gallery" },
 ];
 
-import { motion } from "framer-motion";
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  
-  // Check if we are on a light-themed page
-  const isLightPage = pathname === "/gallery" || pathname === "/products";
 
-  // Determine Logo Color based on page
-  const logoColor = isLightPage ? "#0061A8" : "#FFFFFF";
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
+  const isLightPage =
+    pathname === "/gallery" ||
+    pathname === "/products" ||
+    pathname === "/about";
   const isHomePage = pathname === "/";
 
+  const isNotch = isLightPage || (isHomePage && isScrolled);
+  const shouldBeLight = isNotch;
+
+  const logoColor = shouldBeLight ? "#0061A8" : "#FFFFFF";
+
   return (
-    <motion.nav 
+    <motion.nav
       initial={isHomePage ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={isHomePage ? { 
-        duration: 1.2, 
-        delay: 0.8, 
-        ease: [0.16, 1, 0.3, 1] 
-      } : { duration: 0 }}
-      className={cn(
-        "absolute top-0 left-0 right-0 z-50 px-8 md:px-16 py-6 border-none h-[112px]",
-        isLightPage ? "bg-white" : "bg-transparent pointer-events-none"
-      )}
+      transition={
+        isHomePage
+          ? { duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }
+          : { duration: 0 }
+      }
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 pt-0 md:pt-3"
     >
-      <div className="max-w-[1400px] mx-auto h-full flex items-center justify-between pointer-events-auto">
-        {/* Logo - Standardized Container */}
+      <div
+        className={cn(
+          "relative mx-auto flex items-center justify-between pointer-events-auto transition-all duration-500",
+          isNotch
+            ? "h-[52px] max-w-[680px] bg-white/40 backdrop-blur-sm rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-white/30 px-4 md:px-6 mt-3 md:mt-0 w-[calc(100%-2rem)] md:w-full"
+            : "h-[88px] max-w-[1400px] bg-transparent rounded-none px-8 md:px-16 mt-0 w-full border border-transparent"
+        )}
+      >
+        {/* Logo */}
         <Link href="/#home" className="flex items-center gap-2 group">
-          <div className="relative h-12 md:h-[72px] w-32 md:w-48">
-            <div 
+          <div
+            className={cn(
+              "relative transition-all duration-500",
+              isNotch
+                ? "h-6 md:h-[30px] w-20 md:w-24"
+                : "h-10 md:h-[56px] w-28 md:w-40"
+            )}
+          >
+            <div
               className="w-full h-full"
               style={{
                 backgroundColor: logoColor,
                 WebkitMaskImage: 'url("/assets/images/topo_logo.png")',
                 maskImage: 'url("/assets/images/topo_logo.png")',
-                WebkitMaskRepeat: 'no-repeat',
-                maskRepeat: 'no-repeat',
-                WebkitMaskSize: 'contain',
-                maskSize: 'contain',
-                WebkitMaskPosition: 'left center',
-                maskPosition: 'left center',
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+                WebkitMaskPosition: "left center",
+                maskPosition: "left center",
               }}
             />
           </div>
         </Link>
 
-        {/* Navigation */}
-        <div className="hidden md:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
+        {/* Desktop Nav Links */}
+        <div className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
           {navItems.map((item) => {
             const isAnchor = item.href.startsWith("/#");
-            const isActive = isAnchor ? pathname === "/" : pathname === item.href;
-            
+            const isActive = isAnchor
+              ? pathname === "/"
+              : pathname === item.href;
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-[15.5px] tracking-tight",
-                  isLightPage 
-                    ? (isActive ? "text-[#0061A8] font-bold" : "text-[#1A1A1A] font-bold hover:text-[#0061A8]")
-                    : (isActive ? "text-white font-bold" : "text-white font-bold hover:text-white/80")
+                  "text-[13.5px] tracking-tight transition-colors duration-300",
+                  shouldBeLight
+                    ? isActive
+                      ? "text-[#0061A8] font-bold"
+                      : "text-[#1A1A1A] font-bold hover:text-[#0061A8]"
+                    : isActive
+                    ? "text-white font-bold"
+                    : "text-white font-bold hover:text-white/80"
                 )}
-                style={!isLightPage ? { textShadow: '0 1px 4px rgba(0,0,0,0.3)' } : {}}
+                style={
+                  !shouldBeLight
+                    ? { textShadow: "0 1px 4px rgba(0,0,0,0.3)" }
+                    : {}
+                }
               >
-                <span className="relative pb-1">
-                  {item.name}
-                </span>
+                {item.name}
               </Link>
             );
           })}
         </div>
 
-        {/* Right side spacer */}
-        <div className="w-14 hidden md:block"></div>
+        {/* Right spacer */}
+        <div className="w-8 hidden md:block" />
 
         {/* Mobile Menu Button */}
         <button
           className={cn(
-            "md:hidden p-2",
-            isLightPage ? "text-black" : "text-white"
+            "md:hidden p-2 transition-colors duration-300 pointer-events-auto",
+            shouldBeLight ? "text-black" : "text-white"
           )}
           onClick={() => setIsOpen(true)}
         >
-          <Menu size={32} />
+          <Menu size={28} />
         </button>
       </div>
 
-      {/* Mobile Nav - Keeping minimal transition for usability */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10">
-          <button onClick={() => setIsOpen(false)} className="absolute top-12 right-16 p-2">
-            <X size={44} className="text-black" />
-          </button>
-          <div className="flex flex-col items-center gap-8">
-            {navItems.map((item) => {
-              const isAnchor = item.href.startsWith("/#");
-              const isActive = isAnchor ? pathname === "/" : pathname === item.href;
-              
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "text-5xl font-black uppercase tracking-tighter",
-                    isActive ? "text-[#0061A8]" : "text-black/20 hover:text-black transition-colors"
-                  )}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {/* Mobile Fullscreen Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className="fixed inset-0 bg-white/95 backdrop-blur-xl z-[100] flex flex-col px-8 py-12"
+          >
+            <div className="flex justify-between items-center mb-24">
+              <div
+                className="h-10 w-24 bg-[#0061A8]"
+                style={{
+                  WebkitMaskImage: 'url("/assets/images/topo_logo.png")',
+                  maskImage: 'url("/assets/images/topo_logo.png")',
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
+                }}
+              />
+              <button onClick={() => setIsOpen(false)} className="p-2">
+                <X size={44} className="text-[#0061A8]" strokeWidth={1.5} />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-8">
+              {navItems.map((item, index) => {
+                const isAnchor = item.href.startsWith("/#");
+                const isActive = isAnchor
+                  ? pathname === "/"
+                  : pathname === item.href;
+
+                return (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "text-5xl font-black uppercase tracking-tighter block",
+                        isActive
+                          ? "text-[#0061A8]"
+                          : "text-black/10 hover:text-black transition-colors"
+                      )}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div className="mt-auto pt-12 border-t border-black/5">
+              <p className="text-[11px] font-black uppercase tracking-[0.4em] text-black/30 mb-4">
+                Contact
+              </p>
+              <p className="text-xl font-bold text-[#0061A8]">
+                info@topowindows.com
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

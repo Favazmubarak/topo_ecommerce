@@ -2,29 +2,29 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Volume2, Thermometer, Wrench, Cloud } from "lucide-react";
+import { Disc, Flame, PenTool, Cloudy } from "lucide-react";
 
 const features = [
   {
-    icon: Volume2,
+    icon: Disc,
     title: "Noise reduction",
     desc: "Blocks outside noise for a peaceful space",
     highlight: true
   },
   {
-    icon: Thermometer,
+    icon: Flame,
     title: "Thermal insulation",
     desc: "Blocks outside noise for a peaceful space",
     highlight: false
   },
   {
-    icon: Wrench,
+    icon: PenTool,
     title: "Low maintenance",
     desc: "Blocks outside noise for a peaceful space",
     highlight: false
   },
   {
-    icon: Cloud,
+    icon: Cloudy,
     title: "Weather resistance",
     desc: "Blocks outside noise for a peaceful space",
     highlight: false
@@ -63,16 +63,16 @@ const ProductFeatures = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group p-10 rounded-[24px] relative flex flex-col h-[280px] bg-white text-gray-900 hover:bg-[#0061A8] hover:text-white transition-all duration-500 shadow-sm"
+              className="group p-10 rounded-[24px] relative flex flex-col h-[280px] bg-white text-gray-900 hover:bg-[#0061A8] hover:text-white transition-all duration-500 shadow-sm border border-gray-100/50 cursor-pointer"
             >
               <div className="mb-8 text-gray-900 group-hover:text-white transition-colors">
-                <item.icon size={36} strokeWidth={2.5} />
+                <item.icon size={36} strokeWidth={2} />
               </div>
               
               <h4 className="font-bold text-[18px] md:text-[20px] mb-2 leading-tight">
                 {item.title}
               </h4>
-              <p className="text-[13px] md:text-[14px] leading-relaxed font-normal text-gray-400 group-hover:text-blue-100 transition-colors">
+              <p className="text-[13px] md:text-[14px] leading-relaxed font-normal text-gray-500 group-hover:text-blue-100 transition-colors">
                 {item.desc}
               </p>
 

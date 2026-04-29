@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Hero from "@/models/Hero";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await dbConnect();
@@ -16,11 +18,11 @@ export async function POST(request: Request) {
   try {
     await dbConnect();
     const body = await request.json();
-    const { title, imageUrl, publicId } = body;
+    const { title, titleColor, imageUrl, publicId } = body;
 
     const hero = await Hero.findOneAndUpdate(
       {},
-      { title, imageUrl, publicId },
+      { title, titleColor, imageUrl, publicId },
       { upsert: true, new: true }
     );
 

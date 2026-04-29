@@ -106,128 +106,152 @@ export default function AdminTestimonialsPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="flex items-center justify-between mb-10">
+    <div className="space-y-12 pb-20">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Feedbacks Management</h2>
-          <p className="text-gray-500 text-sm mt-1">Manage client testimonials displayed on the homepage</p>
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight">Client Feedbacks</h2>
+          <p className="text-[13px] font-bold text-gray-400 uppercase tracking-widest mt-2">Manage your public reputation</p>
         </div>
         <button 
           onClick={() => setShowAddForm(true)}
-          className="bg-[#0061A8] text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-100"
+          className="bg-[#0061A8] text-white px-8 py-4 rounded-2xl font-black text-[14px] flex items-center justify-center gap-3 hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-blue-100"
         >
-          <Plus size={20} />
+          <Plus size={18} />
           Add New Feedback
         </button>
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20">
-          <Loader2 className="animate-spin text-[#0061A8]" size={40} />
+        <div className="flex flex-col items-center justify-center py-40 gap-4">
+          <div className="w-12 h-12 border-4 border-[#0061A8]/10 border-t-[#0061A8] rounded-full animate-spin" />
+          <p className="text-[11px] font-black uppercase tracking-[0.4em] text-gray-300">Synchronizing...</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {testimonials.map((item) => (
               <motion.div
                 key={item._id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm relative group"
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white rounded-[32px] p-8 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative group hover:shadow-[0_20px_60px_rgb(0,0,0,0.04)] transition-all duration-500"
               >
-                <button 
-                  onClick={() => handleDelete(item._id)}
-                  className="absolute top-4 right-4 p-2 bg-red-50 text-red-500 rounded-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white"
-                >
-                  <Trash2 size={18} />
-                </button>
-
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-[#0061A8] text-[#0061A8]" />
-                  ))}
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={14} className="fill-[#0061A8] text-[#0061A8]" />
+                    ))}
+                  </div>
+                  <button 
+                    onClick={() => handleDelete(item._id)}
+                    className="p-2.5 bg-red-50 text-red-500 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-500 hover:text-white"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
 
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 italic">"{item.text}"</p>
+                <p className="text-gray-600 text-[15px] leading-relaxed mb-8 italic font-medium">"{item.text}"</p>
 
                 <div className="flex items-center gap-4 mt-auto pt-6 border-t border-gray-50">
-                  <img src={item.imageUrl} className="w-10 h-10 rounded-full object-cover" alt={item.name} />
-                  <span className="font-bold text-gray-900 text-sm">{item.name}</span>
+                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-gray-100 bg-gray-50">
+                    <img src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} />
+                  </div>
+                  <div>
+                    <span className="font-black text-gray-900 text-[14px] block leading-none mb-1">{item.name}</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Verified Client</span>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
 
           {testimonials.length === 0 && !showAddForm && (
-            <div className="col-span-full py-20 text-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-              <MessageSquare className="mx-auto text-gray-300 mb-4" size={48} />
-              <p className="text-gray-500 font-medium">No feedbacks added yet.</p>
+            <div className="col-span-full py-32 text-center bg-gray-50/50 rounded-[40px] border-2 border-dashed border-gray-100">
+              <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <MessageSquare className="text-[#0061A8]" size={32} />
+              </div>
+              <h3 className="text-xl font-black text-gray-900 tracking-tight">No Testimonials Found</h3>
+              <p className="text-gray-400 font-bold text-[13px] mt-2 uppercase tracking-widest">Share your first client success story</p>
             </div>
           )}
         </div>
       )}
 
-      {/* Add Modal */}
+      {/* Add Modal - Premium Overlay */}
       <AnimatePresence>
         {showAddForm && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/50 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[32px] w-full max-w-xl p-8 shadow-2xl relative"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAddForm(false)}
+              className="absolute inset-0 bg-gray-900/40 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-white rounded-[40px] w-full max-w-xl p-10 sm:p-12 shadow-2xl relative z-10 overflow-hidden"
             >
               <button 
                 onClick={() => setShowAddForm(false)}
-                className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-8 right-8 p-3 hover:bg-gray-50 rounded-2xl transition-all group"
               >
-                <X size={24} className="text-gray-400" />
+                <X size={24} className="text-gray-300 group-hover:text-gray-900 transition-colors" />
               </button>
 
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">Add New Feedback</h3>
+              <div className="mb-10">
+                <h3 className="text-3xl font-black text-gray-900 tracking-tight">New Feedback</h3>
+                <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mt-2">Publish a new client testimonial</p>
+              </div>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Client Name</label>
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="space-y-3">
+                  <label className="text-[11px] font-black uppercase tracking-[0.4em] text-gray-400 ml-1">Client Name</label>
                   <input 
                     type="text" 
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     placeholder="e.g. John Doe"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#0061A8] outline-none transition-all"
+                    className="w-full px-6 py-4 rounded-[20px] bg-gray-50 border border-transparent focus:bg-white focus:border-[#0061A8]/20 focus:ring-4 focus:ring-[#0061A8]/5 outline-none transition-all font-bold text-gray-900 placeholder:text-gray-300"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Feedback Text</label>
+                <div className="space-y-3">
+                  <label className="text-[11px] font-black uppercase tracking-[0.4em] text-gray-400 ml-1">Testimonial content</label>
                   <textarea 
                     required
                     value={formData.text}
                     onChange={(e) => setFormData({...formData, text: e.target.value})}
-                    placeholder="What did the client say?"
+                    placeholder="Paste the client's message here..."
                     rows={4}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#0061A8] outline-none transition-all resize-none"
+                    className="w-full px-6 py-4 rounded-[24px] bg-gray-50 border border-transparent focus:bg-white focus:border-[#0061A8]/20 focus:ring-4 focus:ring-[#0061A8]/5 outline-none transition-all resize-none font-medium text-gray-600 leading-relaxed placeholder:text-gray-300"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Client Photo</label>
+                <div className="space-y-3">
+                  <label className="text-[11px] font-black uppercase tracking-[0.4em] text-gray-400 ml-1">Client Photo</label>
                   <div className="relative group">
                     <input 
                       type="file" 
                       accept="image/*"
+                      required
                       onChange={(e) => setFile(e.target.files?.[0] || null)}
                       className="absolute inset-0 opacity-0 cursor-pointer z-10"
                     />
                     <div className={cn(
-                      "border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center transition-all",
-                      file ? "border-green-200 bg-green-50" : "border-gray-200 bg-gray-50 group-hover:bg-gray-100"
+                      "border-2 border-dashed rounded-[24px] p-10 flex flex-col items-center justify-center transition-all duration-500",
+                      file ? "border-green-100 bg-green-50/50" : "border-gray-100 bg-gray-50 group-hover:bg-gray-100/50 group-hover:border-[#0061A8]/20"
                     )}>
-                      <Upload className={file ? "text-green-500" : "text-[#0061A8]"} size={32} />
-                      <p className="mt-2 text-sm font-bold text-gray-700">
-                        {file ? file.name : "Select Photo"}
+                      <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                        <Upload className={file ? "text-green-500" : "text-[#0061A8]"} size={24} />
+                      </div>
+                      <p className="text-[14px] font-black text-gray-900 tracking-tight">
+                        {file ? file.name : "Choose File"}
                       </p>
                     </div>
                   </div>
@@ -236,15 +260,18 @@ export default function AdminTestimonialsPage() {
                 <button 
                   type="submit"
                   disabled={isUploading}
-                  className="w-full bg-[#0061A8] text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full bg-[#0061A8] text-white py-5 rounded-[24px] font-black text-[15px] hover:bg-blue-700 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-3 disabled:opacity-50 shadow-xl shadow-blue-100 mt-4"
                 >
                   {isUploading ? (
                     <>
-                      <Loader2 className="animate-spin" size={24} />
-                      Saving...
+                      <Loader2 className="animate-spin" size={20} />
+                      Publishing...
                     </>
                   ) : (
-                    "Save Feedback"
+                    <>
+                      Save Feedback
+                      <Plus size={18} />
+                    </>
                   )}
                 </button>
               </form>
@@ -257,3 +284,4 @@ export default function AdminTestimonialsPage() {
 }
 
 import { cn } from "@/lib/utils";
+

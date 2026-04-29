@@ -2,16 +2,16 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Shield, Edit3, Zap, Cloud } from "lucide-react";
+import { ShieldCheck, Pencil, Zap, Cloud } from "lucide-react";
 
 const features = [
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "High Durability",
     desc: "Built with strong aluminum to ensure long-lasting performance in all conditions."
   },
   {
-    icon: Edit3,
+    icon: Pencil,
     title: "Modern Design",
     desc: "Clean, sleek designs that enhance any modern space."
   },

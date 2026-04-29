@@ -43,7 +43,7 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("/api/products");
+        const res = await fetch("/api/products", { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
           if (data && data.length > 0) {
@@ -54,11 +54,26 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
         console.error("Error fetching products:", error);
       }
     };
+    
     fetchProducts();
+    const interval = setInterval(fetchProducts, 15000);
+    return () => clearInterval(interval);
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
   const currentProducts = dbProducts.length > 0 ? dbProducts : staticProducts;
-  const displayProducts = variant === "premium" ? currentProducts : currentProducts.slice(0, 3);
+  const totalPages = Math.ceil(currentProducts.length / itemsPerPage);
+
+  const displayProducts = variant === "premium" 
+    ? currentProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    : currentProducts.slice(0, 3);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   if (variant === "premium") {
     return (
@@ -95,6 +110,25 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
               <ProductCard key={index} {...product} index={index} variant="premium" />
             ))}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-20 flex justify-center items-center gap-3">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-[16px] transition-all duration-300 ${
+                    currentPage === i + 1
+                      ? "bg-[#0061A8] text-white shadow-lg shadow-blue-900/20"
+                      : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     );

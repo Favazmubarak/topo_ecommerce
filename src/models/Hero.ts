@@ -2,9 +2,10 @@ import mongoose, { Schema, model, models } from "mongoose";
 
 const HeroSchema = new Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String },
+    titleColor: { type: String, default: "#FFFFFF" },
     imageUrl: { type: String, required: true },
-    publicId: { type: String, required: true }, // Cloudinary public ID
+    publicId: { type: String, default: "" },
   },
   { timestamps: true }
 );

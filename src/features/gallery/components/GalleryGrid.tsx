@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 interface GalleryImage {
   imageUrl: string;
@@ -61,7 +62,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch("/api/gallery");
+        const res = await fetch("/api/gallery", { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
           if (data && data.length > 0) {
@@ -72,11 +73,26 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
         console.error("Error fetching gallery:", error);
       }
     };
+
     fetchImages();
+    const interval = setInterval(fetchImages, 15000);
+    return () => clearInterval(interval);
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const currentImages = dbImages.length > 0 ? dbImages : staticImages;
-  const displayImages = limit ? currentImages.slice(0, limit) : currentImages;
+  const totalPages = Math.ceil(currentImages.length / itemsPerPage);
+
+  const displayImages = limit 
+    ? currentImages.slice(0, limit) 
+    : currentImages.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const goToNext = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -131,7 +147,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
                 Gallery
               </h2>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -154,8 +170,8 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
               initial={{ opacity: 0, scale: 0.98, y: 40 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true, margin: "-5%" }}
-              transition={{ 
-                duration: 1.2, 
+              transition={{
+                duration: 1.2,
                 delay: (index % 3) * 0.1,
                 ease: [0.16, 1, 0.3, 1]
               }}
@@ -174,6 +190,40 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
             </motion.div>
           ))}
         </div>
+
+        {/* View All Button - Only on Homepage */}
+        {isHomePage && (
+          <div className="mt-16 flex justify-center">
+            <Link
+              href="/gallery"
+              className="group flex items-center gap-3 text-[#0061A8] font-bold text-[16px] transition-all"
+            >
+              <span className="tracking-tight">Show all collections</span>
+              <div className="p-2 rounded-full border border-[#0061A8]/20 group-hover:bg-[#0061A8] group-hover:text-white transition-all">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+            </Link>
+          </div>
+        )}
+
+        {/* Pagination - Only on main gallery page */}
+        {!isHomePage && totalPages > 1 && (
+          <div className="mt-20 flex justify-center items-center gap-3">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => handlePageChange(i + 1)}
+                className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-[16px] transition-all duration-300 ${
+                  currentPage === i + 1
+                    ? "bg-[#0061A8] text-white shadow-lg shadow-blue-900/20"
+                    : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Lightbox / Fullscreen Slider */}
@@ -226,7 +276,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
                     alt={currentImages[selectedIndex].title || "Gallery image"}
                     className="max-w-full max-h-[80vh] object-contain shadow-[0_0_80px_rgba(0,0,0,0.5)] rounded-lg"
                   />
-                  
+
                   <div className="mt-12 text-center">
                     <span className="text-white/40 text-sm font-bold uppercase tracking-[0.3em] mb-3 block">
                       {selectedIndex + 1} / {currentImages.length}

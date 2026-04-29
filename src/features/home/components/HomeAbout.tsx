@@ -15,7 +15,7 @@ const HomeAbout = () => {
                 whileInView={{ y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-6xl font-medium text-[#0061A8] tracking-tight"
+                className="text-4xl md:text-6xl font-medium text-[#8F8F8F] tracking-tight"
               >
                 About
               </motion.h2>
@@ -61,22 +61,22 @@ const HomeAbout = () => {
           </motion.div>
         </div>
 
-        {/* Images Row */}
-        <div className="mt-20 flex flex-col md:flex-row items-end gap-[18px]">
+        {/* Images Row - Enhanced Responsiveness */}
+        <div className="mt-12 md:mt-24 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-[18px]">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="w-full md:w-[358px] h-[197px] rounded-[22px] overflow-hidden shadow-lg shrink-0"
+            className="w-full md:w-[450px] aspect-[16/9] md:h-[280px] rounded-[22px] overflow-hidden shadow-2xl shrink-0"
           >
             <img src="/assets/images/image2.jpg" className="w-full h-full object-cover" alt="Interior Design" />
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="w-full md:w-[358px] h-[152px] rounded-[22px] overflow-hidden shadow-lg shrink-0"
+            className="w-full md:w-[358px] aspect-[16/9] md:h-[190px] rounded-[22px] overflow-hidden shadow-2xl shrink-0"
           >
             <img src="/assets/images/image6.jpg" className="w-full h-full object-cover" alt="Modern Architecture" />
           </motion.div>
