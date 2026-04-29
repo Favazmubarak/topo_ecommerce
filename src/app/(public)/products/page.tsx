@@ -1,19 +1,16 @@
 "use client";
 
+import React from "react";
 import ProductsSection from "@/features/products/components/ProductsSection";
-import { motion } from "framer-motion";
+import Navbar from "@/components/layout/Navbar";
 
 export default function ProductsPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: [0.21, 1.02, 0.73, 1] }}
-      className="bg-white min-h-screen pb-24"
-    >
+    <div className="bg-white min-h-screen pb-24">
+      <Navbar />
       <div className="pt-[112px]">
         <ProductsSection variant="premium" />
       </div>
-    </motion.div>
+    </div>
   );
 }

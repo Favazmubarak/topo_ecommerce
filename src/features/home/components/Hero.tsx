@@ -2,13 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Hero = () => {
   const [heroData, setHeroData] = useState({
     title: "Framing the Future of Modern Living",
     imageUrl: "/assets/images/image1.jpg"
   });
+
+  const { scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1.3]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.4]);
 
   useEffect(() => {
     const fetchHero = async () => {
@@ -37,24 +41,27 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative h-screen w-full flex items-center overflow-hidden bg-white">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Background Image with Parallax Zoom */}
+      <motion.div 
+        style={{ scale, opacity }}
+        className="absolute inset-0 z-0"
+      >
         <Image
           src={heroData.imageUrl}
           alt="Topo Hero"
           fill
-          className="object-cover object-[35%_center] scale-110"
+          className="object-cover object-[35%_center]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[82%] via-white/80 via-[93%] to-white z-10" />
-      </div>
+      </motion.div>
 
       <div className="absolute z-20 left-[95px] top-[19%]">
         <motion.div
-          key={heroData.title} // Re-animate if title changes
-          initial={{ opacity: 0, x: -30 }}
+          key={heroData.title}
+          initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           style={{ willChange: "opacity, transform" }}
         >
           <h1

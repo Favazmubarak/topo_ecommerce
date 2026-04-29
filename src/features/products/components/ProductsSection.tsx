@@ -104,16 +104,17 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
     <section id="products" className="pt-12 pb-24 px-8 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-20">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="md:w-1/2"
-          >
-            <h2 className="text-6xl font-medium text-[#0061A8] tracking-tight">
+          <div className="md:w-1/2 overflow-hidden">
+            <motion.h2
+              initial={{ y: "100%" }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-6xl font-medium text-[#0061A8] tracking-tight"
+            >
               Our Products
-            </h2>
-          </motion.div>
+            </motion.h2>
+          </div>
           
           <motion.div
             initial={{ opacity: 0, x: 30 }}

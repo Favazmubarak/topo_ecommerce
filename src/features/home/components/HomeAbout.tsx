@@ -8,17 +8,31 @@ const HomeAbout = () => {
     <section id="about" className="pt-24 pb-12 px-8 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-20">
-          {/* Large Heading */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="md:w-1/2"
-          >
-            <h2 className="text-6xl font-medium text-[#0061A8] tracking-tight">
-              About
-            </h2>
-          </motion.div>
+          <div className="md:w-1/2 flex flex-col gap-6">
+            <div className="overflow-hidden">
+              <motion.h2 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="text-6xl font-medium text-[#0061A8] tracking-tight"
+              >
+                About
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h3 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                className="text-[32px] md:text-[42px] font-medium text-gray-900 leading-tight tracking-tight"
+              >
+                Building Trust Through <br />
+                Precision & Quality
+              </motion.h3>
+            </div>
+          </div>
 
           {/* Content Section */}
           <motion.div

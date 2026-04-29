@@ -16,15 +16,15 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
   if (variant === "premium") {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-50px" }}
         transition={{ 
-          duration: 0.8, 
-          delay: index * 0.1, 
-          ease: [0.21, 1.02, 0.73, 1] 
+          duration: 1.2, 
+          delay: index * 0.15, 
+          ease: [0.16, 1, 0.3, 1] 
         }}
-        className="group relative bg-[#F8F8F8] rounded-[32px] overflow-hidden aspect-[4/5.2] flex flex-col"
+        className="group relative bg-[#F8F8F8] rounded-[32px] overflow-hidden aspect-[4/5.2] flex flex-col cursor-pointer"
       >
         <div className="relative flex-grow overflow-hidden">
           <Image
@@ -32,13 +32,13 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+            className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
           />
         </div>
 
-        {/* Content Box */}
-        <div className="absolute inset-x-0 bottom-0 p-4">
-          <div className="bg-white rounded-[24px] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
+        {/* Content Box with Lift Effect */}
+        <div className="absolute inset-x-0 bottom-0 p-4 transform transition-transform duration-700 group-hover:-translate-y-2">
+          <div className="bg-white/60 backdrop-blur-md rounded-[24px] p-6 border border-white/40 shadow-sm">
             <h3 className="text-[17px] font-bold text-gray-900 mb-1 tracking-tight leading-tight uppercase">
               {title}
             </h3>
@@ -53,23 +53,27 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative bg-white rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05)] aspect-[4/4.2] border border-gray-100"
+      initial={{ opacity: 0, y: 80, scale: 0.92 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ 
+        duration: 1.4, 
+        delay: index * 0.1, 
+        ease: [0.16, 1, 0.3, 1] 
+      }}
+      className="group relative bg-white rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05)] aspect-[4/4.2] border border-gray-100 cursor-pointer"
     >
       <Image
         src={imageUrl}
         alt={title}
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+        className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
       />
 
-      {/* Content Overlay */}
-      <div className="absolute inset-x-0 bottom-0 p-4">
-        <div className="bg-white/95 backdrop-blur-md rounded-[16px] p-6 shadow-lg border border-white/20">
+      {/* Content Overlay with Lift Effect */}
+      <div className="absolute inset-x-0 bottom-0 p-4 transform transition-transform duration-700 group-hover:-translate-y-2">
+        <div className="bg-white/95 backdrop-blur-md rounded-[16px] p-6 shadow-xl border border-white/20">
           <h3 className="text-[18px] md:text-[20px] font-semibold text-gray-900 mb-2 leading-tight">
             {title}
           </h3>

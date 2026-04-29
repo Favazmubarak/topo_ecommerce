@@ -13,6 +13,8 @@ const navItems = [
   { name: "Gallery", href: "/gallery" },
 ];
 
+import { motion } from "framer-motion";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -23,11 +25,22 @@ const Navbar = () => {
   // Determine Logo Color based on page
   const logoColor = isLightPage ? "#0061A8" : "#FFFFFF";
 
+  const isHomePage = pathname === "/";
+
   return (
-    <nav className={cn(
-      "absolute top-0 left-0 right-0 z-50 px-8 md:px-16 py-6 border-none h-[112px]",
-      isLightPage ? "bg-white" : "bg-transparent pointer-events-none"
-    )}>
+    <motion.nav 
+      initial={isHomePage ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={isHomePage ? { 
+        duration: 1.2, 
+        delay: 0.8, 
+        ease: [0.16, 1, 0.3, 1] 
+      } : { duration: 0 }}
+      className={cn(
+        "absolute top-0 left-0 right-0 z-50 px-8 md:px-16 py-6 border-none h-[112px]",
+        isLightPage ? "bg-white" : "bg-transparent pointer-events-none"
+      )}
+    >
       <div className="max-w-[1400px] mx-auto h-full flex items-center justify-between pointer-events-auto">
         {/* Logo - Standardized Container */}
         <Link href="/#home" className="flex items-center gap-2 group">
@@ -118,7 +131,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 };
 
