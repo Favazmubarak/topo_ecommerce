@@ -19,10 +19,24 @@ import { cn } from "@/lib/utils";
 export default function HomePage() {
   const [isMinTimePassed, setIsMinTimePassed] = useState(false);
   const [isImageReady, setIsImageReady] = useState(false);
+  const [isFontReady, setIsFontReady] = useState(false);
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
     setHasHydrated(true);
+    
+    // Check if font is already loaded or wait for it
+    if (document.fonts) {
+      document.fonts.load('1em HighriseDemo').then(() => {
+        setIsFontReady(true);
+      }).catch(() => {
+        // Fallback in case of error
+        setIsFontReady(true);
+      });
+    } else {
+      setIsFontReady(true);
+    }
+
     // Ensure loader shows for at least 800ms
     const minTimer = setTimeout(() => {
       setIsMinTimePassed(true);
@@ -31,6 +45,7 @@ export default function HomePage() {
     // Fallback timer to ensure loader doesn't get stuck forever
     const maxTimer = setTimeout(() => {
       setIsImageReady(true);
+      setIsFontReady(true);
       setIsMinTimePassed(true);
     }, 2500);
 
@@ -40,7 +55,7 @@ export default function HomePage() {
     };
   }, []);
 
-  const isLoading = !(isMinTimePassed && isImageReady);
+  const isLoading = !(isMinTimePassed && isImageReady && isFontReady);
 
   return (
     <>
