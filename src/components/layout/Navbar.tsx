@@ -7,6 +7,8 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
+import Image from "next/image";
+
 const navItems = [
   { name: "Home", href: "/#home" },
   { name: "About", href: "/#about" },
@@ -16,9 +18,10 @@ const navItems = [
 
 interface NavbarProps {
   startAnimation?: boolean;
+  onLogoLoad?: () => void;
 }
 
-const Navbar = ({ startAnimation = true }: NavbarProps) => {
+const Navbar = ({ startAnimation = true, onLogoLoad }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -62,11 +65,21 @@ const Navbar = ({ startAnimation = true }: NavbarProps) => {
       animate={startAnimation ? { y: 0, opacity: 1 } : isHomePage ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
       transition={
         isHomePage
-          ? { duration: 1, ease: [0.16, 1, 0.3, 1] }
+          ? { duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }
           : { duration: 0 }
       }
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 pt-0 md:pt-3"
     >
+      {/* Hidden preloader for logo to notify parent */}
+      <div className="sr-only">
+        <Image 
+          src="/assets/images/topo_logo.png" 
+          alt="Preload" 
+          width={1} 
+          height={1} 
+          onLoad={onLogoLoad}
+        />
+      </div>
       <div
         className={cn(
           "relative mx-auto flex items-center justify-between pointer-events-auto transition-all duration-500",

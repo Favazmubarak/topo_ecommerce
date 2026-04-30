@@ -20,34 +20,36 @@ export default function HomePage() {
   const [isMinTimePassed, setIsMinTimePassed] = useState(false);
   const [isImageReady, setIsImageReady] = useState(false);
   const [isFontReady, setIsFontReady] = useState(false);
+  const [isLogoReady, setIsLogoReady] = useState(false);
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
     setHasHydrated(true);
     
     // Check if font is already loaded or wait for it
-    if (document.fonts) {
+    if (typeof document !== 'undefined' && document.fonts) {
       document.fonts.load('1em HighriseDemo').then(() => {
-        setIsFontReady(true);
+        // Double check after a small delay to be absolutely sure
+        setTimeout(() => setIsFontReady(true), 100);
       }).catch(() => {
-        // Fallback in case of error
         setIsFontReady(true);
       });
     } else {
       setIsFontReady(true);
     }
 
-    // Ensure loader shows for at least 800ms
+    // Ensure loader shows for at least 1500ms for a premium feel
     const minTimer = setTimeout(() => {
       setIsMinTimePassed(true);
-    }, 800);
+    }, 1500);
 
-    // Fallback timer to ensure loader doesn't get stuck forever
+    // Fallback timer
     const maxTimer = setTimeout(() => {
       setIsImageReady(true);
       setIsFontReady(true);
+      setIsLogoReady(true);
       setIsMinTimePassed(true);
-    }, 2500);
+    }, 4000);
 
     return () => {
       clearTimeout(minTimer);
@@ -55,7 +57,7 @@ export default function HomePage() {
     };
   }, []);
 
-  const isLoading = !(isMinTimePassed && isImageReady && isFontReady);
+  const isLoading = !(isMinTimePassed && isImageReady && isFontReady && isLogoReady);
 
   return (
     <>
@@ -67,9 +69,12 @@ export default function HomePage() {
         className={cn("loading-gate", hasHydrated && !isLoading && "ready")}
         initial={{ opacity: 0 }}
         animate={!isLoading ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <Navbar startAnimation={!isLoading} />
+        <Navbar 
+          startAnimation={!isLoading} 
+          onLogoLoad={() => setIsLogoReady(true)}
+        />
         <div className="bg-white">
           <Hero 
             onImageLoad={() => setIsImageReady(true)} 
