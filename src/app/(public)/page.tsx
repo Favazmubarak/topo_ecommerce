@@ -14,12 +14,15 @@ import PageLoader from "@/components/ui/PageLoader";
 
 import Navbar from "@/components/layout/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function HomePage() {
   const [isMinTimePassed, setIsMinTimePassed] = useState(false);
   const [isImageReady, setIsImageReady] = useState(false);
+  const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
+    setHasHydrated(true);
     // Ensure loader shows for at least 800ms
     const minTimer = setTimeout(() => {
       setIsMinTimePassed(true);
@@ -36,6 +39,7 @@ export default function HomePage() {
       clearTimeout(maxTimer);
     };
   }, []);
+
   const isLoading = !(isMinTimePassed && isImageReady);
 
   return (
@@ -44,9 +48,18 @@ export default function HomePage() {
         {isLoading && <PageLoader key="loader" />}
       </AnimatePresence>
 
-      <Navbar />
-      <div className="bg-white">
-        <Hero onImageLoad={() => setIsImageReady(true)} />
+      <motion.div
+        className={cn("loading-gate", hasHydrated && !isLoading && "ready")}
+        initial={{ opacity: 0 }}
+        animate={!isLoading ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <Navbar startAnimation={!isLoading} />
+        <div className="bg-white">
+          <Hero 
+            onImageLoad={() => setIsImageReady(true)} 
+            startAnimation={!isLoading}
+          />
           <HomeAbout />
           <ProductsSection />
           <WhyChooseTopo />
@@ -94,7 +107,8 @@ export default function HomePage() {
           </section>
 
           <Footer />
-      </div>
+        </div>
+      </motion.div>
     </>
   );
 }

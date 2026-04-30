@@ -2,16 +2,17 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const PageLoader = () => {
   return (
     <motion.div 
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-white"
     >
-      <div className="relative flex flex-col items-center">
+      <div className="relative flex flex-col items-center animate-pulse-subtle">
         {/* Cinematic Logo Reveal */}
         <div className="overflow-hidden">
           <motion.div
@@ -21,7 +22,7 @@ const PageLoader = () => {
               duration: 0.8, 
               ease: [0.16, 1, 0.3, 1]
             }}
-            className="w-40 md:w-56 h-16 md:h-[84px] relative"
+            className="w-40 md:w-56 h-16 md:h-[84px] relative animate-logo-ssr"
           >
             <div 
               className="w-full h-full"
@@ -50,7 +51,7 @@ const PageLoader = () => {
               delay: 0.15, 
               ease: [0.16, 1, 0.3, 1]
             }}
-            className="text-[#0061A8] font-bold text-[10px] uppercase tracking-[0.4em] block"
+            className="text-[#0061A8] font-bold text-[10px] uppercase tracking-[0.4em] block animate-subtext-ssr"
           >
             Premium Aluminum Solutions
           </motion.span>

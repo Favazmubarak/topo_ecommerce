@@ -14,7 +14,11 @@ const navItems = [
   { name: "Gallery", href: "/gallery" },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  startAnimation?: boolean;
+}
+
+const Navbar = ({ startAnimation = true }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -55,10 +59,10 @@ const Navbar = () => {
   return (
     <motion.nav
       initial={isHomePage ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
-      animate={{ y: 0, opacity: 1 }}
+      animate={startAnimation ? { y: 0, opacity: 1 } : isHomePage ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
       transition={
         isHomePage
-          ? { duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }
+          ? { duration: 1, ease: [0.16, 1, 0.3, 1] }
           : { duration: 0 }
       }
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 pt-0 md:pt-3"

@@ -6,9 +6,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 interface HeroProps {
   onImageLoad?: () => void;
+  startAnimation?: boolean;
 }
 
-const Hero = ({ onImageLoad }: HeroProps = {}) => {
+const Hero = ({ onImageLoad, startAnimation = true }: HeroProps) => {
   const [heroData, setHeroData] = useState({
     title: "Framing the Future of Modern Living",
     titleColor: "#FFFFFF",
@@ -82,7 +83,7 @@ const Hero = ({ onImageLoad }: HeroProps = {}) => {
           src={heroData.imageUrl}
           alt="Topo Hero"
           fill
-          className={`object-cover object-[35%_center] transition-opacity duration-1000 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          className="object-cover object-[35%_center]"
           priority
           onLoad={() => setIsImageLoaded(true)}
         />
@@ -94,8 +95,8 @@ const Hero = ({ onImageLoad }: HeroProps = {}) => {
           <motion.div
             key={heroData.title}
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             style={{ willChange: "opacity, transform" }}
           >
             <h1

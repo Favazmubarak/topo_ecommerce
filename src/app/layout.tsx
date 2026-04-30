@@ -37,6 +37,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-hidden`}
     >
+      <head>
+        <link rel="preload" href="/assets/images/topo_logo.png" as="image" />
+      </head>
       <body className="min-h-full flex flex-col overflow-x-hidden">
         {children}
       </body>

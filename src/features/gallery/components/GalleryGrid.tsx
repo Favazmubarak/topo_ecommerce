@@ -274,36 +274,62 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
             {/* Image Container */}
             <div className="relative w-full h-full flex items-center justify-center p-4 md:p-24 overflow-hidden">
               <AnimatePresence mode="wait">
-                <motion.div
+                <LightboxImage 
                   key={selectedIndex}
-                  initial={{ opacity: 0, x: 100, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: -100, scale: 0.9 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative max-w-full max-h-full flex flex-col items-center justify-center"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <img
-                    src={currentImages[selectedIndex].imageUrl}
-                    alt={currentImages[selectedIndex].title || "Gallery image"}
-                    className="max-w-full max-h-[80vh] object-contain shadow-[0_0_80px_rgba(0,0,0,0.5)] rounded-lg"
-                  />
-
-                  <div className="mt-12 text-center">
-                    <span className="text-white/40 text-sm font-bold uppercase tracking-[0.3em] mb-3 block">
-                      {selectedIndex + 1} / {currentImages.length}
-                    </span>
-                    <h3 className="text-white text-3xl font-bold tracking-tight">
-                      {currentImages[selectedIndex].title}
-                    </h3>
-                  </div>
-                </motion.div>
+                  imageUrl={currentImages[selectedIndex].imageUrl}
+                  title={currentImages[selectedIndex].title}
+                  index={selectedIndex}
+                  total={currentImages.length}
+                />
               </AnimatePresence>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </section>
+  );
+};
+
+// Extracted LightboxImage component for better state management
+const LightboxImage = ({ imageUrl, title, index, total }: { imageUrl: string; title?: string; index: number; total: number }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 100, scale: 0.9 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: -100, scale: 0.9 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="relative max-w-full max-h-full flex flex-col items-center justify-center"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="relative group">
+        {!isLoaded && (
+          <div className="absolute inset-0 bg-white/5 animate-pulse rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" />
+          </div>
+        )}
+        
+        {/* We use a skeleton background as well */}
+        <div className={`relative ${!isLoaded ? 'w-[80vw] h-[60vh] bg-white/5 animate-pulse rounded-lg' : ''}`}>
+          <img
+            src={imageUrl}
+            alt={title || "Gallery image"}
+            className={`max-w-full max-h-[80vh] object-contain shadow-[0_0_80px_rgba(0,0,0,0.5)] rounded-lg transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setIsLoaded(true)}
+          />
+        </div>
+      </div>
+
+      <div className="mt-12 text-center">
+        <span className="text-white/40 text-sm font-bold uppercase tracking-[0.3em] mb-3 block">
+          {index + 1} / {total}
+        </span>
+        <h3 className="text-white text-3xl font-bold tracking-tight">
+          {title}
+        </h3>
+      </div>
+    </motion.div>
   );
 };
 
