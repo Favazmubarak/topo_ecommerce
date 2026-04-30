@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -13,6 +13,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ title, description, imageUrl, index, variant = "default" }: ProductCardProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   if (variant === "premium") {
     return (
       <motion.div
@@ -26,13 +28,19 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
         }}
         className="group relative bg-[#F8F8F8] rounded-[32px] overflow-hidden aspect-[4/5.2] flex flex-col cursor-pointer"
       >
-        <div className="relative flex-grow overflow-hidden">
+        <div className="relative flex-grow overflow-hidden bg-gray-200">
+          {isLoading && (
+            <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+          )}
           <Image
             src={imageUrl}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
+            className={`object-cover transition-all duration-[2s] ease-out group-hover:scale-110 ${
+              isLoading ? "opacity-0 scale-105" : "opacity-100 scale-100"
+            }`}
+            onLoad={() => setIsLoading(false)}
           />
         </div>
 
@@ -63,12 +71,18 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
       }}
       className="group relative bg-white rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05)] aspect-[4/4.2] border border-gray-100 cursor-pointer"
     >
+      {isLoading && (
+        <div className="absolute inset-0 bg-gray-300 animate-pulse z-0" />
+      )}
       <Image
         src={imageUrl}
         alt={title}
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
+        className={`object-cover transition-all duration-[2s] ease-out group-hover:scale-110 z-10 ${
+          isLoading ? "opacity-0 scale-105" : "opacity-100 scale-100"
+        }`}
+        onLoad={() => setIsLoading(false)}
       />
 
       {/* Content Overlay - Clean integrated look matching reference */}

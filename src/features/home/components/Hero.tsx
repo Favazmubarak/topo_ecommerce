@@ -11,6 +11,8 @@ const Hero = () => {
     imageUrl: "/assets/images/image1.jpg"
   });
 
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1.3]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.4]);
@@ -52,14 +54,18 @@ const Hero = () => {
       {/* Background Image with Parallax Zoom */}
       <motion.div 
         style={{ scale, opacity }}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 bg-gray-200"
       >
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-gray-300 animate-pulse z-0" />
+        )}
         <Image
           src={heroData.imageUrl}
           alt="Topo Hero"
           fill
-          className="object-cover object-[35%_center]"
+          className={`object-cover object-[35%_center] transition-opacity duration-1000 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
           priority
+          onLoad={() => setIsImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[82%] via-white/80 via-[93%] to-white z-10" />
       </motion.div>

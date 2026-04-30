@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const HomeAbout = () => {
@@ -8,6 +9,9 @@ const HomeAbout = () => {
     image1Url: "/assets/images/image2.jpg",
     image2Url: "/assets/images/image6.jpg"
   });
+
+  const [isImage1Loaded, setIsImage1Loaded] = useState(false);
+  const [isImage2Loaded, setIsImage2Loaded] = useState(false);
 
   useEffect(() => {
     const fetchAbout = async () => {
@@ -89,18 +93,36 @@ const HomeAbout = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="w-full md:w-[450px] aspect-[16/9] md:h-[280px] rounded-[22px] overflow-hidden shadow-2xl shrink-0"
+            className="w-full md:w-[450px] aspect-[16/9] md:h-[280px] rounded-[22px] overflow-hidden shadow-2xl shrink-0 relative bg-gray-200"
           >
-            <img src={images.image1Url} className="w-full h-full object-cover" alt="Interior Design" />
+            {!isImage1Loaded && (
+              <div className="absolute inset-0 bg-gray-300 animate-pulse z-0" />
+            )}
+            <Image 
+              src={images.image1Url} 
+              alt="Interior Design" 
+              fill
+              className={`object-cover transition-opacity duration-700 z-10 ${isImage1Loaded ? 'opacity-100' : 'opacity-0'}`} 
+              onLoad={() => setIsImage1Loaded(true)}
+            />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="w-full md:w-[358px] aspect-[16/9] md:h-[190px] rounded-[22px] overflow-hidden shadow-2xl shrink-0"
+            className="w-full md:w-[358px] aspect-[16/9] md:h-[190px] rounded-[22px] overflow-hidden shadow-2xl shrink-0 relative bg-gray-200"
           >
-            <img src={images.image2Url} className="w-full h-full object-cover" alt="Modern Architecture" />
+            {!isImage2Loaded && (
+              <div className="absolute inset-0 bg-gray-300 animate-pulse z-0" />
+            )}
+            <Image 
+              src={images.image2Url} 
+              alt="Modern Architecture" 
+              fill
+              className={`object-cover transition-opacity duration-700 z-10 ${isImage2Loaded ? 'opacity-100' : 'opacity-0'}`} 
+              onLoad={() => setIsImage2Loaded(true)}
+            />
           </motion.div>
         </div>
       </div>

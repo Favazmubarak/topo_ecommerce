@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 
@@ -152,8 +153,13 @@ const Testimonials = () => {
 
                   {/* Card Bottom: User Info */}
                   <div className="px-8 pb-8 pt-4 mt-auto border-t border-gray-50 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100">
-                      <img src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} />
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100 relative bg-gray-200 shrink-0">
+                      <Image 
+                        src={item.imageUrl} 
+                        fill
+                        className="object-cover" 
+                        alt={item.name} 
+                      />
                     </div>
                     <h4 className="font-semibold text-gray-900 text-[14px]">{item.name}</h4>
                   </div>

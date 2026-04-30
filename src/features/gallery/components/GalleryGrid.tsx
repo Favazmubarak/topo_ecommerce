@@ -35,15 +35,20 @@ const ParallaxImage = ({ url, title, isHomePage }: { url: string; title?: string
     offset: ["start end", "end start"]
   });
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
-    <div ref={ref} className="relative w-full h-full overflow-hidden bg-gray-100">
+    <div ref={ref} className="relative w-full h-full overflow-hidden bg-gray-200">
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gray-300 animate-pulse z-0" />
+      )}
       <motion.img
         src={url}
         alt={title || "Gallery image"}
         style={{ y, scale: 1.2 }}
-        className={`w-full h-[120%] object-cover absolute top-[-10%] transition-transform duration-1000 ease-out ${isHomePage ? "group-hover:scale-[1.25]" : ""}`}
+        onLoad={() => setIsLoaded(true)}
+        className={`w-full h-[120%] object-cover absolute top-[-10%] transition-transform duration-1000 ease-out z-10 ${isHomePage ? "group-hover:scale-[1.25]" : ""} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
       />
     </div>
   );
