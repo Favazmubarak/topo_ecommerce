@@ -39,6 +39,7 @@ body {
   line-height: 0.95;
   letter-spacing: 0em;
   font-size: clamp(4.5rem, 15vw, 165px);
+  opacity: 0;
 }
 
 .hero-bottom-fade {

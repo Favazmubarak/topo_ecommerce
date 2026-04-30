@@ -104,7 +104,8 @@ const Hero = ({ onImageLoad, startAnimation = true }: HeroProps) => {
               style={{ 
                 color: heroData.titleColor, 
                 WebkitTextFillColor: heroData.titleColor,
-                transition: "color 0.5s ease-in-out" 
+                transition: "color 0.5s ease-in-out",
+                opacity: startAnimation ? 1 : 0
               }}
             >
               <span className="block md:whitespace-nowrap">
