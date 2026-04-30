@@ -70,16 +70,6 @@ const Navbar = ({ startAnimation = true, onLogoLoad }: NavbarProps) => {
       }
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 pt-0 md:pt-3"
     >
-      {/* Hidden preloader for logo to notify parent */}
-      <div className="sr-only">
-        <Image 
-          src="/assets/images/topo_logo.png" 
-          alt="Preload" 
-          width={1} 
-          height={1} 
-          onLoad={onLogoLoad}
-        />
-      </div>
       <div
         className={cn(
           "relative mx-auto flex items-center justify-between pointer-events-auto transition-all duration-500",
@@ -98,19 +88,18 @@ const Navbar = ({ startAnimation = true, onLogoLoad }: NavbarProps) => {
                 : "h-10 md:h-[68px] w-28 md:w-[190px]"
             )}
           >
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundColor: logoColor,
-                WebkitMaskImage: 'url("/assets/images/topo_logo.png")',
-                maskImage: 'url("/assets/images/topo_logo.png")',
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-                WebkitMaskPosition: "left center",
-                maskPosition: "left center",
+            <Image
+              src="/assets/images/topo_logo.png"
+              alt="Topo Logo"
+              fill
+              priority
+              className="object-contain transition-all duration-500"
+              style={{ 
+                filter: shouldBeLight 
+                  ? 'brightness(0) saturate(100%) invert(26%) sepia(87%) saturate(2135%) hue-rotate(185deg) brightness(96%) contrast(101%)' 
+                  : 'brightness(0) invert(1)' 
               }}
+              onLoad={onLogoLoad}
             />
           </div>
         </Link>
