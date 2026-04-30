@@ -99,7 +99,7 @@ export default function AdminWhyChoose() {
       )}
 
       <div className="bg-white rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.02)] border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgb(0,0,0,0.03)]">
-        <div className="p-10 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-white to-gray-50/50">
+        <div className="p-6 md:p-10 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-white to-gray-50/50">
           <div>
             <h2 className="text-2xl font-black text-gray-900 tracking-tight">Why Choose Topo</h2>
             <p className="text-[13px] font-bold text-gray-400 uppercase tracking-widest mt-1">Manage Section Image</p>
@@ -114,7 +114,7 @@ export default function AdminWhyChoose() {
           </button>
         </div>
 
-        <div className="p-10 max-w-2xl mx-auto">
+        <div className="p-6 md:p-10 max-w-2xl mx-auto">
           <div className="space-y-6">
             <h3 className="text-lg font-bold text-gray-900 text-center">Feature Image</h3>
             <div className="relative">
@@ -124,7 +124,7 @@ export default function AdminWhyChoose() {
                 className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 accept="image/*"
               />
-              <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-[32px] p-12 bg-gray-50 hover:bg-blue-50/50 hover:border-[#0061A8]/30 transition-all duration-300 group">
+              <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-[32px] p-8 md:p-12 bg-gray-50 hover:bg-blue-50/50 hover:border-[#0061A8]/30 transition-all duration-300 group">
                 <Upload className={file ? "text-green-500 mb-4" : "text-[#0061A8] mb-4 group-hover:scale-110 transition-transform"} size={32} />
                 <p className="font-black text-gray-900 tracking-tight text-center">
                   {file ? file.name : "Select Image"}

@@ -31,7 +31,7 @@ const HomeAbout = () => {
     fetchAbout();
   }, []);
   return (
-    <section id="about" className="pt-24 pb-12 px-8 md:px-16 bg-white overflow-hidden">
+    <section id="about" className="pt-24 pb-12 px-6 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-20">
           <div className="md:w-1/2 flex flex-col gap-6">
@@ -39,8 +39,8 @@ const HomeAbout = () => {
               <motion.h2 
                 initial={{ y: "100%" }}
                 whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, margin: "0px" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="text-4xl md:text-6xl font-medium text-[#8F8F8F] tracking-tight"
               >
                 About
@@ -50,8 +50,8 @@ const HomeAbout = () => {
               <motion.h3 
                 initial={{ y: "100%" }}
                 whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                viewport={{ once: true, margin: "0px" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 className="text-[32px] md:text-[42px] font-medium text-gray-900 leading-tight tracking-tight"
               >
                 Building Trust Through <br />
@@ -64,7 +64,8 @@ const HomeAbout = () => {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="md:w-1/2"
           >
             <p className="text-[#666666] text-lg leading-relaxed mb-10">
@@ -92,7 +93,8 @@ const HomeAbout = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="w-full md:w-[450px] aspect-[16/9] md:h-[280px] rounded-[22px] overflow-hidden shadow-2xl shrink-0 relative bg-gray-200"
           >
             {!isImage1Loaded && (
@@ -109,8 +111,8 @@ const HomeAbout = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             className="w-full md:w-[358px] aspect-[16/9] md:h-[190px] rounded-[22px] overflow-hidden shadow-2xl shrink-0 relative bg-gray-200"
           >
             {!isImage2Loaded && (

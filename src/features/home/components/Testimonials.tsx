@@ -82,13 +82,13 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="pt-16 md:pt-24 pb-24 md:pb-32 px-8 md:px-16 bg-white overflow-hidden border-t border-gray-50">
+    <section id="testimonials" className="pt-16 md:pt-24 pb-24 md:pb-32 px-6 md:px-16 bg-white overflow-hidden border-t border-gray-50">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
             className="text-[clamp(2rem,5vw,3rem)] font-medium text-[#0061A8] tracking-tight leading-tight"
           >
             What Our Clients Say

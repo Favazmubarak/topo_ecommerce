@@ -77,8 +77,8 @@ const Navbar = () => {
             className={cn(
               "relative transition-all duration-500",
               isNotch
-                ? "h-6 md:h-[30px] w-20 md:w-24"
-                : "h-10 md:h-[56px] w-28 md:w-40"
+                ? "h-6 md:h-[36px] w-20 md:w-[110px]"
+                : "h-10 md:h-[68px] w-28 md:w-[190px]"
             )}
           >
             <div
@@ -156,7 +156,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className="fixed inset-0 bg-white/95 backdrop-blur-xl z-[100] flex flex-col px-8 py-12"
+            className="fixed inset-0 bg-white/98 backdrop-blur-xl z-[100] flex flex-col px-8 py-12 pointer-events-auto"
           >
             <div className="flex justify-between items-center mb-24">
               <div
@@ -170,8 +170,8 @@ const Navbar = () => {
                   maskSize: "contain",
                 }}
               />
-              <button onClick={() => setIsOpen(false)} className="p-2">
-                <X size={44} className="text-[#0061A8]" strokeWidth={1.5} />
+              <button onClick={() => setIsOpen(false)} className="p-3 bg-gray-50/80 rounded-full hover:bg-gray-100 transition-colors">
+                <X size={32} className="text-[#0061A8]" strokeWidth={2} />
               </button>
             </div>
 
@@ -193,10 +193,10 @@ const Navbar = () => {
                     <Link
                       href={item.href}
                       className={cn(
-                        "text-5xl font-black uppercase tracking-tighter block",
+                        "text-4xl font-medium tracking-tight block transition-colors",
                         isActive
                           ? "text-[#0061A8]"
-                          : "text-black/10 hover:text-black transition-colors"
+                          : "text-gray-400 hover:text-gray-900"
                       )}
                       onClick={() => setIsOpen(false)}
                     >

@@ -46,14 +46,15 @@ const WhyChooseTopo = () => {
   }, []);
 
   return (
-    <section className="pt-16 md:pt-24 pb-12 md:pb-20 px-8 md:px-16 bg-white overflow-hidden">
+    <section className="pt-8 md:pt-12 pb-12 md:pb-20 px-6 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Heading Section */}
         <div className="mb-10">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(2rem,5vw,3rem)] font-medium text-[#0061A8] tracking-tight leading-tight mb-3"
           >
             Why Choose Topo
@@ -61,8 +62,8 @@ const WhyChooseTopo = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[#666666] text-[15px] md:text-[17px] max-w-2xl font-normal leading-relaxed"
           >
             Built on quality, designed for modern living, and trusted for lasting performance.
@@ -72,9 +73,10 @@ const WhyChooseTopo = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Left: Horizontal Image */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:w-1/2 w-full"
           >
             <div className="rounded-[24px] overflow-hidden shadow-xl aspect-video">
@@ -90,8 +92,8 @@ const WhyChooseTopo = () => {
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true, margin: "0px" }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="flex flex-col gap-4"
                 >
                   <div className="text-[#0061A8]">

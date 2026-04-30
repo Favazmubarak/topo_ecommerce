@@ -33,13 +33,14 @@ const features = [
 
 const ProductFeatures = () => {
   return (
-    <section className="py-12 md:py-20 px-8 md:px-16 bg-[#E8F1FC] overflow-hidden">
+    <section className="py-12 md:py-20 px-6 md:px-16 bg-[#E8F1FC] overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="text-center mb-12">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(2rem,5vw,3rem)] font-bold text-[#0061A8] tracking-tight leading-tight mb-3"
           >
             Product Features
@@ -47,8 +48,8 @@ const ProductFeatures = () => {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-gray-900 font-bold max-w-2xl mx-auto text-[15px] md:text-[17px]"
           >
             Designed to deliver comfort, durability, and high performance in every detail.
@@ -61,8 +62,8 @@ const ProductFeatures = () => {
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="group p-10 rounded-[24px] relative flex flex-col h-[280px] bg-white text-gray-900 hover:bg-[#0061A8] hover:text-white transition-all duration-500 shadow-sm border border-gray-100/50 cursor-pointer"
             >
               <div className="mb-8 text-gray-900 group-hover:text-white transition-colors">

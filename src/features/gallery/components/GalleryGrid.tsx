@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface GalleryImage {
   imageUrl: string;
@@ -43,13 +44,19 @@ const ParallaxImage = ({ url, title, isHomePage }: { url: string; title?: string
       {!isLoaded && (
         <div className="absolute inset-0 bg-gray-300 animate-pulse z-0" />
       )}
-      <motion.img
-        src={url}
-        alt={title || "Gallery image"}
+      <motion.div
         style={{ y, scale: 1.2 }}
-        onLoad={() => setIsLoaded(true)}
-        className={`w-full h-[120%] object-cover absolute top-[-10%] transition-transform duration-1000 ease-out z-10 ${isHomePage ? "group-hover:scale-[1.25]" : ""} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-      />
+        className={`w-full h-[120%] absolute top-[-10%] transition-transform duration-1000 ease-out z-10 ${isHomePage ? "group-hover:scale-[1.25]" : ""}`}
+      >
+        <Image
+          src={url}
+          alt={title || "Gallery image"}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          onLoad={() => setIsLoaded(true)}
+          className={`object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        />
+      </motion.div>
     </div>
   );
 };
@@ -140,7 +147,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
       <div className="max-w-[1400px] mx-auto bg-white">
         {/* Header Section */}
         {showTitle && (
-          <div className="flex flex-col md:flex-row items-end justify-between gap-12 mb-16 bg-white">
+          <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12 mb-16 bg-white text-center md:text-left">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -160,7 +167,7 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="md:w-1/2 pb-2"
             >
-              <p className="text-[#333333] text-[18px] md:text-[20px] leading-[1.3] font-medium md:text-right max-w-[420px] ml-auto">
+              <p className="text-[#333333] text-[18px] md:text-[20px] leading-[1.3] font-medium text-center md:text-right max-w-[420px] mx-auto md:ml-auto md:mr-0">
                 Explore our completed projects showcasing<br className="hidden md:block" /> quality, style, and precision in every detail.
               </p>
             </motion.div>
@@ -172,11 +179,11 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
           {displayImages.map((image, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.98, y: 40 }}
+              initial={{ opacity: 0, scale: 0.98, y: 20 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
+              viewport={{ once: true, margin: "0px" }}
               transition={{
-                duration: 1.2,
+                duration: 0.8,
                 delay: (index % 3) * 0.1,
                 ease: [0.16, 1, 0.3, 1]
               }}
@@ -243,25 +250,25 @@ const GalleryGrid = ({ limit, showTitle = true, isHomePage = false }: GalleryGri
           >
             {/* Close Button */}
             <motion.button
-              className="absolute top-8 right-8 text-white/50 hover:text-white transition-all z-[110]"
-              onClick={() => setSelectedIndex(null)}
+              className="absolute top-4 right-4 md:top-8 md:right-8 text-white/50 hover:text-white transition-all z-[120]"
+              onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
               whileHover={{ scale: 1.1, rotate: 90 }}
             >
-              <X size={44} strokeWidth={1.5} />
+              <X className="w-8 h-8 md:w-11 md:h-11" strokeWidth={1.5} />
             </motion.button>
 
             {/* Navigation Buttons */}
             <button
-              className="absolute left-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-all p-4 z-[110]"
+              className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-2 md:p-4 z-[120]"
               onClick={goToPrev}
             >
-              <ChevronLeft size={64} strokeWidth={1} />
+              <ChevronLeft className="w-10 h-10 md:w-16 md:h-16" strokeWidth={1} />
             </button>
             <button
-              className="absolute right-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-all p-4 z-[110]"
+              className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-2 md:p-4 z-[120]"
               onClick={goToNext}
             >
-              <ChevronRight size={64} strokeWidth={1} />
+              <ChevronRight className="w-10 h-10 md:w-16 md:h-16" strokeWidth={1} />
             </button>
 
             {/* Image Container */}

@@ -53,7 +53,7 @@ const FAQAccordion = () => {
   }, []);
 
   return (
-    <section id="faq" className="pt-24 md:pt-32 pb-12 px-8 md:px-16 bg-white overflow-hidden border-t border-gray-50">
+    <section id="faq" className="pt-24 md:pt-32 pb-12 px-6 md:px-16 bg-white overflow-hidden border-t border-gray-50">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-32">
           {/* Left Side: Heading */}
@@ -61,7 +61,8 @@ const FAQAccordion = () => {
             <motion.h2 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(2rem,5vw,3.2rem)] font-medium text-[#0061A8] tracking-tight leading-tight mb-6"
             >
               Frequently Asked Questions
@@ -69,8 +70,8 @@ const FAQAccordion = () => {
             <motion.p 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-[#999999] text-[15px] md:text-[16px] leading-relaxed font-normal max-w-sm"
             >
               Find clear answers to your questions and discover everything you need to know about our products and services.
@@ -84,8 +85,8 @@ const FAQAccordion = () => {
                 key={index}
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true, margin: "0px" }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className={`overflow-hidden transition-all duration-500 rounded-[40px] ${
                   openIndex === index ? "bg-[#F0F7FF] shadow-md" : "bg-[#E8F1FC]"
                 }`}

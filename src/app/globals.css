@@ -6,7 +6,7 @@
   src: url('/assets/fonts/HighriseFont-Demo-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 :root {
@@ -38,7 +38,7 @@ body {
   text-transform: uppercase;
   line-height: 0.95;
   letter-spacing: 0em;
-  font-size: clamp(3rem, 9.54vw, 165px);
+  font-size: clamp(4.5rem, 15vw, 165px);
 }
 
 .hero-bottom-fade {

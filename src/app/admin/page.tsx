@@ -115,7 +115,7 @@ export default function AdminDashboard() {
 
       {/* Hero Management Card */}
       <div className="bg-white rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.02)] border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgb(0,0,0,0.03)]">
-        <div className="p-10 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-white to-gray-50/50">
+        <div className="p-6 md:p-10 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-white to-gray-50/50">
           <div>
             <h2 className="text-2xl font-black text-gray-900 tracking-tight">Homepage Hero</h2>
             <p className="text-[13px] font-bold text-gray-400 uppercase tracking-widest mt-1">Primary Landing Visuals</p>
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        <div className="p-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
           {/* Left: Inputs */}
           <div className="lg:col-span-7 space-y-12">
             <div className="space-y-4">
@@ -180,7 +180,7 @@ export default function AdminDashboard() {
                   onChange={(e) => setFile(e.target.files?.[0] || null)}
                   className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 />
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-100 rounded-[32px] p-16 bg-gray-50/30 hover:bg-gray-50 hover:border-[#0061A8]/30 transition-all duration-500 group">
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-100 rounded-[32px] p-8 md:p-16 bg-gray-50/30 hover:bg-gray-50 hover:border-[#0061A8]/30 transition-all duration-500 group">
                   <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                     <Upload className={file ? "text-green-500" : "text-[#0061A8]"} size={28} />
                   </div>

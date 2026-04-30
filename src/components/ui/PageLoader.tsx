@@ -18,7 +18,7 @@ const PageLoader = () => {
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ 
-              duration: 1.2, 
+              duration: 0.8, 
               ease: [0.16, 1, 0.3, 1]
             }}
             className="w-40 md:w-56 h-16 md:h-[84px] relative"
@@ -46,8 +46,8 @@ const PageLoader = () => {
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ 
-              duration: 1, 
-              delay: 0.3, 
+              duration: 0.8, 
+              delay: 0.15, 
               ease: [0.16, 1, 0.3, 1]
             }}
             className="text-[#0061A8] font-bold text-[10px] uppercase tracking-[0.4em] block"

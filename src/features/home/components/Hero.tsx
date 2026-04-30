@@ -4,7 +4,11 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const Hero = () => {
+interface HeroProps {
+  onImageLoad?: () => void;
+}
+
+const Hero = ({ onImageLoad }: HeroProps = {}) => {
   const [heroData, setHeroData] = useState({
     title: "Framing the Future of Modern Living",
     titleColor: "#FFFFFF",
@@ -12,6 +16,7 @@ const Hero = () => {
   });
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isApiReady, setIsApiReady] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1.3]);
@@ -24,15 +29,23 @@ const Hero = () => {
         if (res.ok) {
           const data = await res.json();
           if (data) {
-            setHeroData({
-              title: data.title || "",
-              titleColor: data.titleColor || "#FFFFFF",
-              imageUrl: data.imageUrl || "/assets/images/image1.jpg"
+            setHeroData(prev => {
+              const newUrl = data.imageUrl || "/assets/images/image1.jpg";
+              if (prev.imageUrl !== newUrl) {
+                setIsImageLoaded(false);
+              }
+              return {
+                title: data.title || "",
+                titleColor: data.titleColor || "#FFFFFF",
+                imageUrl: newUrl
+              };
             });
           }
         }
       } catch (error) {
         console.error("Error fetching hero:", error);
+      } finally {
+        setIsApiReady(true);
       }
     };
 
@@ -43,6 +56,12 @@ const Hero = () => {
     
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (isApiReady && isImageLoaded) {
+      if (onImageLoad) onImageLoad();
+    }
+  }, [isApiReady, isImageLoaded, onImageLoad]);
 
   // Split title for the two-line effect
   const titleWords = heroData.title.split(" ");
@@ -71,12 +90,12 @@ const Hero = () => {
       </motion.div>
 
       {heroData.title && (
-        <div className="absolute z-20 left-8 right-8 top-1/4 md:left-[95px] md:right-auto md:top-[19%]">
+        <div className="absolute z-20 left-6 right-6 top-[22%] md:left-[95px] md:right-auto md:top-[19%]">
           <motion.div
             key={heroData.title}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             style={{ willChange: "opacity, transform" }}
           >
             <h1

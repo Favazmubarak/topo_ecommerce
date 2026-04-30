@@ -18,12 +18,12 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
   if (variant === "premium") {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        initial={{ opacity: 0, y: 30, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "0px" }}
         transition={{ 
-          duration: 1.2, 
-          delay: index * 0.15, 
+          duration: 0.8, 
+          delay: index * 0.1, 
           ease: [0.16, 1, 0.3, 1] 
         }}
         className="group relative bg-[#F8F8F8] rounded-[32px] overflow-hidden aspect-[4/5.2] flex flex-col cursor-pointer"
@@ -61,11 +61,11 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 80, scale: 0.92 }}
+      initial={{ opacity: 0, y: 40, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "0px" }}
       transition={{ 
-        duration: 1.4, 
+        duration: 0.8, 
         delay: index * 0.1, 
         ease: [0.16, 1, 0.3, 1] 
       }}
@@ -86,7 +86,7 @@ const ProductCard = ({ title, description, imageUrl, index, variant = "default" 
       />
 
       {/* Content Overlay - Clean integrated look matching reference */}
-      <div className="absolute inset-x-0 bottom-0 p-3 transform transition-transform duration-700 group-hover:-translate-y-1">
+      <div className="absolute inset-x-0 bottom-0 p-3 transform transition-transform duration-700 group-hover:-translate-y-1 z-20">
         <div className="bg-white/85 rounded-[20px] p-6 shadow-sm border border-white/10">
           <h3 className="text-[17px] md:text-[19px] font-bold text-gray-900 mb-1.5 tracking-tight leading-tight">
             {title}

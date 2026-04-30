@@ -16,31 +16,37 @@ import Navbar from "@/components/layout/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isMinTimePassed, setIsMinTimePassed] = useState(false);
+  const [isImageReady, setIsImageReady] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+    // Ensure loader shows for at least 800ms
+    const minTimer = setTimeout(() => {
+      setIsMinTimePassed(true);
+    }, 800);
+
+    // Fallback timer to ensure loader doesn't get stuck forever
+    const maxTimer = setTimeout(() => {
+      setIsImageReady(true);
+      setIsMinTimePassed(true);
+    }, 2500);
+
+    return () => {
+      clearTimeout(minTimer);
+      clearTimeout(maxTimer);
+    };
   }, []);
+  const isLoading = !(isMinTimePassed && isImageReady);
 
   return (
-    <AnimatePresence mode="wait">
-      {isLoading ? (
-        <PageLoader key="loader" />
-      ) : (
-        <>
-          <Navbar />
-          <motion.div 
-            key="content"
-            initial={{ opacity: 0, filter: "blur(12px)", scale: 1.01 }}
-            animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-            transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{ willChange: "filter, opacity" }}
-            className="bg-white"
-          >
-          <Hero />
+    <>
+      <AnimatePresence mode="wait">
+        {isLoading && <PageLoader key="loader" />}
+      </AnimatePresence>
+
+      <Navbar />
+      <div className="bg-white">
+        <Hero onImageLoad={() => setIsImageReady(true)} />
           <HomeAbout />
           <ProductsSection />
           <WhyChooseTopo />
@@ -54,13 +60,7 @@ export default function HomePage() {
             {/* Restored Background Image Logic */}
             <div className="absolute inset-0 z-0">
               <div 
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: "url('/assets/images/img14.jpg')",
-                  backgroundAttachment: "fixed",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
+                className="absolute inset-0 bg-[url('/assets/images/img14.jpg')] bg-cover bg-center md:bg-fixed"
               />
               <div className="absolute inset-0 bg-black/30" />
             </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               >
-                <h2 className="text-[32px] md:text-[64px] font-medium text-white tracking-tight leading-tight mb-6 whitespace-nowrap">
+                <h2 className="text-[32px] md:text-[64px] font-medium text-white tracking-tight leading-tight mb-6">
                   Upgrade Your Space with Topo
                 </h2>
                 
@@ -94,9 +94,7 @@ export default function HomePage() {
           </section>
 
           <Footer />
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+      </div>
+    </>
   );
 }

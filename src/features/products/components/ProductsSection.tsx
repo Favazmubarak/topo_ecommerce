@@ -77,13 +77,13 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
 
   if (variant === "premium") {
     return (
-      <section id="products" className="pt-24 pb-32 px-8 md:px-16 bg-white overflow-hidden">
+      <section id="products" className="pt-24 pb-32 px-6 md:px-16 bg-white overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col md:flex-row items-start justify-between gap-12 md:gap-24 mb-20">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 0.8, ease: [0.21, 1.02, 0.73, 1] }}
               className="md:w-1/2"
             >
@@ -95,7 +95,7 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.21, 1.02, 0.73, 1] }}
               className="md:w-1/2 pt-0"
             >
@@ -135,15 +135,15 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
   }
 
   return (
-    <section id="products" className="pt-12 pb-24 px-8 md:px-16 bg-white overflow-hidden">
+    <section id="products" className="pt-12 pb-12 px-6 md:px-16 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-20">
           <div className="md:w-1/2 overflow-hidden">
             <motion.h2
               initial={{ y: "100%" }}
               whileInView={{ y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-6xl font-medium text-[#0061A8] tracking-tight"
             >
               Our Products
@@ -153,7 +153,8 @@ const ProductsSection = ({ variant = "default" }: { variant?: "default" | "premi
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="md:w-1/2"
           >
             <p className="text-[#666666] text-lg leading-relaxed pt-1">
