@@ -24,20 +24,18 @@ const PageLoader = () => {
             }}
             className="w-40 md:w-56 h-16 md:h-[84px] relative animate-logo-ssr"
           >
-            <div 
-              className="w-full h-full"
-              style={{
-                backgroundColor: "#0061A8",
-                WebkitMaskImage: 'url("/assets/images/topo_logo.png")',
-                maskImage: 'url("/assets/images/topo_logo.png")',
-                WebkitMaskRepeat: 'no-repeat',
-                maskRepeat: 'no-repeat',
-                WebkitMaskSize: 'contain',
-                maskSize: 'contain',
-                WebkitMaskPosition: 'center',
-                maskPosition: 'center',
-              }}
-            />
+            <div className="w-full h-full relative">
+              <Image 
+                src="/assets/images/topo_logo.png"
+                alt="Topo Logo"
+                fill
+                priority
+                className="object-contain"
+                style={{ 
+                  filter: 'brightness(0) saturate(100%) invert(26%) sepia(87%) saturate(2135%) hue-rotate(185deg) brightness(96%) contrast(101%)' 
+                }}
+              />
+            </div>
           </motion.div>
         </div>
 
