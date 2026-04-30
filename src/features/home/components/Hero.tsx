@@ -96,7 +96,7 @@ const Hero = ({ onImageLoad, startAnimation = true }: HeroProps) => {
             key={heroData.title}
             initial={{ opacity: 0, y: 30 }}
             animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.5, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
             style={{ willChange: "opacity, transform" }}
           >
             <h1

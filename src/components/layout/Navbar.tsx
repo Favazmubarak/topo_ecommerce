@@ -65,7 +65,7 @@ const Navbar = ({ startAnimation = true, onLogoLoad }: NavbarProps) => {
       animate={startAnimation ? { y: 0, opacity: 1 } : isHomePage ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
       transition={
         isHomePage
-          ? { duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }
+          ? { duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }
           : { duration: 0 }
       }
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 pt-0 md:pt-3"

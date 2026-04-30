@@ -38,10 +38,10 @@ export default function HomePage() {
       setIsFontReady(true);
     }
 
-    // Ensure loader shows for at least 1500ms for a premium feel
+    // Ensure loader shows for at least 2500ms for a rock-solid premium feel
     const minTimer = setTimeout(() => {
       setIsMinTimePassed(true);
-    }, 1500);
+    }, 2500);
 
     // Fallback timer
     const maxTimer = setTimeout(() => {
@@ -49,7 +49,7 @@ export default function HomePage() {
       setIsFontReady(true);
       setIsLogoReady(true);
       setIsMinTimePassed(true);
-    }, 4000);
+    }, 5000);
 
     return () => {
       clearTimeout(minTimer);

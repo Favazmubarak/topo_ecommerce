@@ -37,6 +37,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-hidden`}
     >
+      <head>
+        <link 
+          rel="preload" 
+          href="/assets/fonts/HighriseFont-Demo-Regular.otf" 
+          as="font" 
+          type="font/otf" 
+          crossOrigin="anonymous" 
+        />
+      </head>
       <body className="min-h-full flex flex-col overflow-x-hidden">
         {children}
       </body>
